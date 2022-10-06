@@ -11,10 +11,10 @@ class Evidencia{
     private string $OBSERVACION;
     private string $ESTADO;
     private string $ID_LUGAR_GEOGRAFICO;
-    private string $USUARIO_CREACION;
-    private string $FECHA_CREACION;
+    // private string $USUARIO_CREACION;
+    // private string $FECHA_CREACION;
 
-    function __construct(string $ID_EVIDENCIA,string $TITULO,string $DESCRIPCIÓN,string $TIPO,string $TIPOARCHIVO,string $FECHA_CREACION_EVIDENCIA,string $FECHA_REGISTRO_EVIDENCIA,string $AUTORES,string $OBSERVACION,string $ID_LUGAR_GEOGRAFICO,string $ESTADO,string $USUARIO_CREACION,string $FECHA_CREACION){ //Constructor con parametros
+    function __construct(string $ID_EVIDENCIA,string $TITULO,string $DESCRIPCIÓN,string $TIPO,string $TIPOARCHIVO,string $FECHA_CREACION_EVIDENCIA,string $FECHA_REGISTRO_EVIDENCIA,string $AUTORES,string $OBSERVACION,string $ID_LUGAR_GEOGRAFICO,string $ESTADO){ //Constructor con parametros
 
         $this->ID_EVIDENCIA=$ID_EVIDENCIA;
         $this->TITULO=$TITULO;
@@ -27,8 +27,8 @@ class Evidencia{
         $this->OBSERVACION=$OBSERVACION;
         $this->ID_LUGAR_GEOGRAFICO=$ID_LUGAR_GEOGRAFICO;
         $this->ESTADO=$ESTADO;
-        $this->USUARIO_CREACION=$USUARIO_CREACION;
-        $this->FECHA_CREACION=$FECHA_CREACION;
+        // $this->USUARIO_CREACION=$USUARIO_CREACION;
+        // $this->FECHA_CREACION=$FECHA_CREACION;
     }
     
     function getID_EVIDENCIA(){
@@ -44,7 +44,7 @@ class Evidencia{
     }
 
     function setTitulo($TITULO){
-        return $this->TITULO;
+        return $this->TITULO=$TITULO;
     }
 
     function getDescripcion(){
@@ -118,21 +118,21 @@ class Evidencia{
         return $this->ESTADO=$ESTADO;
     }
 
-    function getUSUARIO_CREACION(){
-        return $this->USUARIO_CREACION;
-    }
+    // function getUSUARIO_CREACION(){
+    //     return $this->USUARIO_CREACION;
+    // }
 
-    function setUSUARIO_CREACION($USUARIO_CREACION){
-        return $this->USUARIO_CREACION=$USUARIO_CREACION;
-    }
+    // function setUSUARIO_CREACION($USUARIO_CREACION){
+    //     return $this->USUARIO_CREACION=$USUARIO_CREACION;
+    // }
 
-    function getFECHA_CREACION(){
-        return $this->FECHA_CREACION;
-    }
+    // function getFECHA_CREACION(){
+    //     return $this->FECHA_CREACION;
+    // }
 
-    function setFECHA_CREACION($FECHA_CREACION){
-        return $this->FECHA_CREACION=$FECHA_CREACION;
-    }
+    // function setFECHA_CREACION($FECHA_CREACION){
+    //     return $this->FECHA_CREACION=$FECHA_CREACION;
+    // }
 
 }
 

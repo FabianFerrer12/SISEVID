@@ -4,6 +4,7 @@
 
         function __construct($objEvidencia){
             $this->objEvidencia = $objEvidencia;
+            // var_dump($objEvidencia);
         }
 
         function guardarEvidencia(){
@@ -17,23 +18,23 @@
             $autores=$this->objEvidencia->getAutores();
             $Observacion=$this->objEvidencia->getObservacion();
             $Estado=$this->objEvidencia->getESTADO();
-            $USUARIO_CREACION=$this->objEvidencia->getUSUARIO_CREACION();
-            $FechaCreacion=$this->objEvidencia->getFECHA_CREACION();
+            // $USUARIO_CREACION=$this->objEvidencia->getUSUARIO_CREACION();
+            // $FechaCreacion=$this->objEvidencia->getFECHA_CREACION();
             $ID_LUGAR=$this->objEvidencia->getID_LUGAR();
-
-
-            $sql="INSERT INTO evidencia VALUES('".$ID_Evidencia."','".$titu."','".$des."','".$tip."','".$tipoarchivo."','".$fechaCre."','".$fechaRegistroEvi."','".$autores."','".$Observacion."','','".$Estado."','".$USUARIO_CREACION."','".$FechaCreacion."')";
+            $sql="INSERT INTO EVIDENCIA (ID_EVIDENCIA,TITULO,DESCRIPCIÓN,TIPO,TIPO_ARCHIVO,FECHA_CREACION_EVIDENCIA,FECHA_REGISTRO_EVIDENCIA,AUTORES,OBSERVACION,ESTADO) VALUES('$ID_Evidencia','$titu','$des','$tip','$tipoarchivo','$fechaCre','$fechaRegistroEvi','$autores','$Observacion','$Estado')";
             $DB = new ControlConexion();
             $DB->abrirBd("localhost","root","","SISEVID", 3306);
             $DB->ejecutarComandoSql($sql);
             $DB->cerrarBd();
+
+            // echo($DB);
         }   
 
 
         function borrar(){
-            $ID_EVIDENCIA = $this->$objEvidencia->getID_EVIDENCIA();
+            $ID_Evidencia=$this->objEvidencia->getID_EVIDENCIA();
 
-            $sql="DELETE FROM evidencia WHERE ID_EVIDENCIA='".$ID_EVIDENCIA."'";
+            $sql="DELETE FROM evidencia WHERE ID_EVIDENCIA='$ID_Evidencia'";
             $DB = new ControlConexion();
             $DB->abrirBd("localhost","root","","SISEVID", 3306);
             $DB->ejecutarComandoSql($sql);
@@ -41,29 +42,35 @@
         }
 
         function consultar(){
+            $ID_Evidencia=$this->objEvidencia->getID_EVIDENCIA();
+            $mysqli = new mysqli("localhost","root","","SISEVID");
 
-            $ID_EVIDENCIA = $this->$objEvidencia->getID_EVIDENCIA();
-
-            $sql="SELECT * FROM evidencia WHERE ID_EVIDENCIA='".$ID_EVIDENCIA."'";
-            $DB = new ControlConexion();
-            $DB->abrirBd("localhost","root","","SISEVID", 3306);
-            $recordSet=$DB->ejecutarSelect($sql);
-            if($row = $recordSet->fetch_array(MYSQLI_BOTH)){
-                $this->$objEvidencia->setTitulo($row['TITULO']);
-                $this->$objEvidencia->setDescripcion($row['DESCRIPCIÓN']);
-                $this->$objEvidencia->setTipo($row['TIPO']);
-                $this->objEvidencia->setTIPOARCHIVO($row['TIPO_ARCHIVO']);
-                $this->$objEvidencia->setFechaCreacion($row['FECHA_CREACION_EVIDENCIA']);
-                $this->$objEvidencia->setFechaRegistroEvidencia($row['FECHA_REGISTRO_EVIDENCIA']);
-                $this->$objEvidencia-setAutores($row['AUTORES']);
-                $this->$objEvidencia->setObservacion($row['OBSERVACION']);
-                $this->$objEvidencia->setID_LUGAR($row['ID_LUGAR_GEOGRAFICO ']);
-                $this->$objEvidencia->setESTADO($row['ESTADO']);
-                $this->$objEvidencia->setUSUARIO_CREACION($row['USUARIO_CREACION']);
-                $this->$objEvidencia->setFECHA_CREACION($row['FECHA_CREACION']);
+            if ($mysqli -> connect_errno) {
+                echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+                exit();
             }
-            $DB->cerrarBd();
-            return $this->$objEvidencia;
+
+            $sql = "SELECT * FROM evidencia WHERE ID_EVIDENCIA='$ID_Evidencia'";
+            $result = $mysqli -> query($sql);
+
+            // Associative array
+            $row = $result -> fetch_assoc();
+            // echo ($row['AUTORES']);
+            $this->objEvidencia->setTitulo($row['TITULO']);
+            $this->objEvidencia->setDescripcion($row['DESCRIPCIÓN']);
+            $this->objEvidencia->setTipo($row['TIPO']);
+            $this->objEvidencia->setTIPOARCHIVO($row['TIPO_ARCHIVO']);
+            $this->objEvidencia->setFechaCreacion($row['FECHA_CREACION_EVIDENCIA']);
+            $this->objEvidencia->setFechaRegistroEvidencia($row['FECHA_REGISTRO_EVIDENCIA']);
+            $this->objEvidencia->setAutores($row['AUTORES']);
+            $this->objEvidencia->setObservacion($row['OBSERVACION']);
+            // $this->objEvidencia->setID_LUGAR($row['ID_LUGAR_GEOGRAFICO']);
+            $this->objEvidencia->setESTADO($row['ESTADO']);
+            // Free result set
+            $result -> free_result();
+            $mysqli -> close();
+
+            return $this->objEvidencia;
         }
 
         function actualizar(){
@@ -77,15 +84,28 @@
             $Observacion=$this->objEvidencia->getObservacion();
             $Estado=$this->objEvidencia->getESTADO();
             $ID_Evidencia=$this->objEvidencia->getID_EVIDENCIA();
-            $USUARIO_CREACION=$this->objEvidencia->getUSUARIO_CREACION();
-            $FechaCreacion=$this->objEvidencia->getFECHA_CREACION();
-            $ID_LUGAR=$this->objEvidencia->getID_LUGAR();
+            // $USUARIO_CREACION=$this->objEvidencia->getUSUARIO_CREACION();
+            // $FechaCreacion=$this->objEvidencia->getFECHA_CREACION();
+            // $ID_LUGAR=$this->objEvidencia->getID_LUGAR();
 
-            $sql="UPDATE evidencia SET TITULO='".$titu."',DESCRIPCIÓN='".$des."',TIPO='".$tip."',TIPO_ARCHIVO='".$tipoarchivo."',FECHA_CREACION_EVIDENCIA='".$fechaCre."',FECHA_REGISTRO_EVIDENCIA='".$fechaRegistroEvi."',AUTORES='".$autores."',OBSERVACION='".$Observacion."',ID_LUGAR_GEOGRAFICO='".$ID_LUGAR."',ESTADO='".$Estado."',USUARIO_CREACION='".$USUARIO_CREACION."',FECHA_CREACION='".$FechaCreacion."'WHERE ID_EVIDENCIA='".$ID_Evidencia."'";
-            $DB = new ControlConexion();
-            $DB->abrirBd("localhost","root","","SISEVID", 3306);
-            $DB->ejecutarComandoSql($sql);
-            $DB->cerrarBd();
+
+            $mysqli = new mysqli("localhost","root","","SISEVID");
+
+            if ($mysqli -> connect_errno) {
+                echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+                exit();
+            }
+
+            $sql="UPDATE evidencia SET TITULO='$titu',DESCRIPCIÓN='$des',TIPO='$tip',TIPO_ARCHIVO='$tipoarchivo',FECHA_CREACION_EVIDENCIA='$fechaCre',FECHA_REGISTRO_EVIDENCIA='$fechaRegistroEvi',AUTORES='$autores',OBSERVACION='$Observacion',ESTADO='$Estado' WHERE ID_EVIDENCIA='$ID_Evidencia'";
+
+            $result = $mysqli -> query($sql);
+
+            // Associative array
+            // $row = $result -> fetch_assoc();
+
+            // Free result set
+            // $result -> free_result();
+            $mysqli -> close();
         }
 
         function listar(){
@@ -98,11 +118,15 @@
             $DB->abrirBd("localhost","root","","SISEVID", 3306);
             $recordSet=$DB->ejecutarSelect($sql);
             while($row = $recordSet->fetch_array(MYSQLI_BOTH)){
-                $mat[$i][0]=$row['codigo'];
-                $mat[$i][1]=$row['nombre'];
-                $mat[$i][2]=$row['telefono'];
-                $mat[$i][3]=$row['email'];
-                $mat[$i][4]=$row['direccion'];
+                $mat[$i][0]=$row['TITULO'];
+                $mat[$i][1]=$row['DESCRIPCIÓN'];
+                $mat[$i][2]=$row['TIPO'];
+                $mat[$i][3]=$row['TIPO_ARCHIVO'];
+                $mat[$i][4]=$row['FECHA_CREACION_EVIDENCIA'];
+                $mat[$i][5]=$row['FECHA_REGISTRO_EVIDENCIA'];
+                $mat[$i][6]=$row['AUTORES'];
+                $mat[$i][7]=$row['OBSERVACION'];
+                $mat[$i][8]=$row['ESTADO'];
                 $i++;
             }
             $DB->cerrarBd();

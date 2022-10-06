@@ -18,6 +18,7 @@ $UsuarioCreacion = "";
 $FechaCreacion = "";
 $mat = [];
 $bot = "";
+
 if (isset($_POST['ID_EVIDENCIA'])) $idEvi = $_POST['ID_EVIDENCIA'];
 if (isset($_POST['TITULO'])) $titu = $_POST['TITULO'];
 if (isset($_POST['DESCRIPCIÓN'])) $descrip = $_POST['DESCRIPCIÓN'];
@@ -27,10 +28,10 @@ if (isset($_POST['FECHA_CREACION_EVIDENCIA'])) $FechaCreacionEvi = $_POST['FECHA
 if (isset($_POST['FECHA_REGISTRO_EVIDENCIA'])) $FechaRegistroEvi = $_POST['FECHA_REGISTRO_EVIDENCIA'];
 if (isset($_POST['AUTORES'])) $Autores = $_POST['AUTORES'];
 if (isset($_POST['OBSERVACION'])) $Observacion = $_POST['OBSERVACION'];
-if (isset($_POST['ID_LUGAR_GEOGRAFICO'])) $IDLugarGeo = $_POST['ID_LUGAR_GEOGRAFICO'];
+// if (isset($_POST['ID_LUGAR_GEOGRAFICO'])) $IDLugarGeo = $_POST['ID_LUGAR_GEOGRAFICO'];
 if (isset($_POST['ESTADO'])) $Estado = $_POST['ESTADO'];
-if (isset($_POST['USUARIO_CREACION'])) $UsuarioCreacion = $_POST['USUARIO_CREACION'];
-if (isset($_POST['FECHA_CREACION'])) $FechaCreacion = $_POST['FECHA_CREACION'];
+// if (isset($_POST['USUARIO_CREACION'])) $UsuarioCreacion = $_POST['USUARIO_CREACION'];
+// if (isset($_POST['FECHA_CREACION'])) $FechaCreacion = $_POST['FECHA_CREACION'];
 
 
 if (isset($_POST['btn'])) $bot = $_POST['btn'];
@@ -38,32 +39,41 @@ if (isset($_POST['btn'])) $bot = $_POST['btn'];
 
 switch ($bot) {
   case 'Guardar':
-    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado, $UsuarioCreacion, $FechaCreacion);
+    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
     $objEvidenciaController = new EvidenciaController($objEvidencia);
     $objEvidenciaController->guardarEvidencia();
     // var_dump($objEvidencia); 
     break;
   case 'Consultar':
-    $objEvidencia = new Evidencia($idEvi, "", "", "", "", "", "", "", "", "", "", "", "");
+    $objEvidencia = new Evidencia($idEvi, "", "", "", "", "", "", "", "", "", "");
     $objEvidenciaController = new EvidenciaController($objEvidencia);
     $objEvidencia = $objEvidenciaController->consultar();
-    //var_dump($objEvidencia);
+    // var_dump($objEvidencia);
+    $titu=$objEvidencia->getTitulo();
+    $descrip=$objEvidencia->getDescripcion();
+    $tipo=$objEvidencia->getTipo();
+    $TipoArchivo=$objEvidencia->getTipoArchivo();
+    $FechaCreacionEvi=$objEvidencia->getFechaCreacion();
+    $FechaRegistroEvi=$objEvidencia->getFechaRegistroEvidencia();
+    $Autores=$objEvidencia->getAutores();
+    $Observacion=$objEvidencia->getObservacion();
+    $Estado=$objEvidencia->getESTADO();
     break;
 
   case 'Modificar':
-    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado, $UsuarioCreacion, $FechaCreacion);
+    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
     $objEvidenciaController = new EvidenciaController($objEvidencia);
-    $objEvidenciaController->modificar();
+    $objEvidenciaController->actualizar();
     break;
 
   case 'Borrar':
-    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado, $UsuarioCreacion, $FechaCreacion);
+    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
     $objEvidenciaController = new EvidenciaController($objEvidencia);
     $objEvidenciaController->borrar();
     break;
 
   case 'Listar':
-    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado, $UsuarioCreacion, $FechaCreacion);
+    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
     $objEvidenciaController = new EvidenciaController($objEvidencia);
     $mat = $objEvidenciaController->listar();
 
@@ -81,7 +91,7 @@ switch ($bot) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <title>Datos Evidencia</title>
@@ -118,15 +128,15 @@ switch ($bot) {
                 <div class="row g-3">
                     <div class="col">
                         <label>Tipo</label>
-                        <input class="form-control" type="text" name="TIPO" value="<?php echo $tipo ?>">
+                        <input class="form-control" type="text" name="TIPO" value="<?php echo $tipo?>">
                     </div>
                     <div class="col">
                         <label>Tipo archivo</label>
-                        <input class="form-control" type="text" name="TITULO" value="<?php echo $TipoArchivo ?>">
+                        <input class="form-control" type="text" name="TIPO_ARCHIVO" value="<?php echo $TipoArchivo ?>">
                     </div>
                     <div class="col">
                         <label>Fecha creacion evidencia</label>
-                        <input class="form-control" type="text" name="DESCRIPCIÓN"
+                        <input class="form-control" type="date" name="FECHA_CREACION_EVIDENCIA"
                             value="<?php echo $FechaCreacionEvi ?>">
                     </div>
                 </div>
@@ -134,53 +144,30 @@ switch ($bot) {
                 <div class="row g-3">
                     <div class="col">
                         <label>Fecha registro evidencia</label>
-                        <input class="form-control" type="text" name="ID_EVIDENCIA"
+                        <input class="form-control" type="date" name="FECHA_REGISTRO_EVIDENCIA"
                             value="<?php echo $FechaRegistroEvi ?>">
                     </div>
                     <div class="col">
                         <label>Autores</label>
-                        <input class="form-control" type="text" name="TITULO" value="<?php echo $Autores ?>">
+                        <input class="form-control" type="text" name="AUTORES" value="<?php echo $Autores?>">
                     </div>
                     <div class="col">
                         <label>Observacion</label>
-                        <input class="form-control" type="text" name="DESCRIPCIÓN" value="<?php echo $Observacion ?>">
+                        <input class="form-control" type="text" name="OBSERVACION" value="<?php echo $Observacion ?>">
                     </div>
                 </div>
 
                 <div class="row g-3">
                     <div class="col-md-4">
                         <label>Lugar geografico</label>
-                        <input class="form-control" type="text" name="ID_EVIDENCIA" value="<?php echo $IDLugarGeo ?>">
+                        <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO" value="<?php echo $IDLugarGeo ?>">
                     </div>
                     <div class="col-md-4">
                         <label>Estado</label>
-                        <input class="form-control" type="text" name="TITULO" value="<?php echo $Estado ?>">
+                        <input class="form-control" type="text" name="ESTADO" value="<?php echo $Estado ?>">
                     </div>
                 </div>
 
-                <!-- <div class="col-md-5">
-                    <div class="col-sm-4">
-                        Usuario Creacion
-                    </div>
-                    <div class="col-sm-4">
-                        <input type="text" name="USUARIO_CREACION" value="<?php echo $UsuarioCreacion ?>">
-                    </div>
-                    <div class="col-sm-4">
-
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="col-sm-4">
-                        Fecha Creacion
-                    </div>
-                    <div class="col-sm-4">
-                        <input type="time" name="FECHA_CREACION" value="<?php echo $FechaCreacion ?>">
-                    </div>
-                    <div class="col-sm-4">
-
-                    </div>
-                </div> -->
             </div>
 
 
