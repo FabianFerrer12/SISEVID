@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 //if (isset($_SESSION['activeSesion'])) header("Location: ../index.php");

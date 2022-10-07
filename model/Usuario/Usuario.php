@@ -1,6 +1,5 @@
 <?php
-include 'model/Usuario/InformacionContacto.php';
-include 'model/Usuario/UsuarioRol.php';
+
 class Usuario{
     private string $ID;
     private string $USER;
