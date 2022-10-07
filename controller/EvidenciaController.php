@@ -18,12 +18,12 @@
             $autores=$this->objEvidencia->getAutores();
             $Observacion=$this->objEvidencia->getObservacion();
             $Estado=$this->objEvidencia->getESTADO();
-            // $USUARIO_CREACION=$this->objEvidencia->getUSUARIO_CREACION();
+            $USUARIO_CREACION=$_SESSION['USER'];
             // $FechaCreacion=$this->objEvidencia->getFECHA_CREACION();
             $ID_LUGAR=$this->objEvidencia->getID_LUGAR();
-            $sql="INSERT INTO EVIDENCIA (ID_EVIDENCIA,TITULO,DESCRIPCIÓN,TIPO,TIPO_ARCHIVO,FECHA_CREACION_EVIDENCIA,FECHA_REGISTRO_EVIDENCIA,AUTORES,OBSERVACION,ESTADO) VALUES('$ID_Evidencia','$titu','$des','$tip','$tipoarchivo','$fechaCre','$fechaRegistroEvi','$autores','$Observacion','$Estado')";
+            $sql="INSERT INTO EVIDENCIA (ID_EVIDENCIA,TITULO,DESCRIPCIÓN,TIPO,TIPO_ARCHIVO,FECHA_CREACION_EVIDENCIA,FECHA_REGISTRO_EVIDENCIA,AUTORES,OBSERVACION,ESTADO,USUARIO_CREACION,FECHA_CREACION) VALUES('$ID_Evidencia','$titu','$des','$tip','$tipoarchivo','$fechaCre','$fechaRegistroEvi','$autores','$Observacion','$Estado','$USUARIO_CREACION',NOW())";
             $DB = new ControlConexion();
-            $DB->abrirBd("localhost","root","","SISEVID", 3306);
+            $DB->abrirBd("localhost","root","socrates","SISEVID", 3306);
             $DB->ejecutarComandoSql($sql);
             $DB->cerrarBd();
 
@@ -31,26 +31,26 @@
         }   
 
 
-        function borrar(){
-            $ID_Evidencia=$this->objEvidencia->getID_EVIDENCIA();
+        function borrar($id_evidencia){
+            // $ID_Evidencia=$this->objEvidencia->getID_EVIDENCIA();
 
-            $sql="DELETE FROM evidencia WHERE ID_EVIDENCIA='$ID_Evidencia'";
+            $sql="DELETE FROM evidencia WHERE ID_EVIDENCIA='$id_evidencia'";
             $DB = new ControlConexion();
-            $DB->abrirBd("localhost","root","","SISEVID", 3306);
+            $DB->abrirBd("localhost","root","socrates","SISEVID", 3306);
             $DB->ejecutarComandoSql($sql);
             $DB->cerrarBd();
         }
 
-        function consultar(){
-            $ID_Evidencia=$this->objEvidencia->getID_EVIDENCIA();
-            $mysqli = new mysqli("localhost","root","","SISEVID");
+        function consultar($id_evidencia){
+            // $ID_Evidencia=$this->objEvidencia->getID_EVIDENCIA();
+            $mysqli = new mysqli("localhost","root","socrates","SISEVID");
 
             if ($mysqli -> connect_errno) {
                 echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
                 exit();
             }
 
-            $sql = "SELECT * FROM evidencia WHERE ID_EVIDENCIA='$ID_Evidencia'";
+            $sql = "SELECT * FROM evidencia WHERE ID_EVIDENCIA='$id_evidencia'";
             $result = $mysqli -> query($sql);
 
             // Associative array
@@ -89,7 +89,7 @@
             // $ID_LUGAR=$this->objEvidencia->getID_LUGAR();
 
 
-            $mysqli = new mysqli("localhost","root","","SISEVID");
+            $mysqli = new mysqli("localhost","root","socrates","SISEVID");
 
             if ($mysqli -> connect_errno) {
                 echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
@@ -115,7 +115,7 @@
 
             $sql="SELECT * FROM evidencia";
             $DB = new ControlConexion();
-            $DB->abrirBd("localhost","root","","SISEVID", 3306);
+            $DB->abrirBd("localhost","root","socrates","SISEVID", 3306);
             $recordSet=$DB->ejecutarSelect($sql);
             while($row = $recordSet->fetch_array(MYSQLI_BOTH)){
                 $mat[$i][0]=$row['TITULO'];
@@ -127,6 +127,7 @@
                 $mat[$i][6]=$row['AUTORES'];
                 $mat[$i][7]=$row['OBSERVACION'];
                 $mat[$i][8]=$row['ESTADO'];
+                $mat[$i][9]=$row['ID_EVIDENCIA'];
                 $i++;
             }
             $DB->cerrarBd();
