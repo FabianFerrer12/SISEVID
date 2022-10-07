@@ -26,13 +26,17 @@ switch ($bot) {
         echo '<script language="javascript">alert("Se borran todos los datos");</script>';
         break;
     case 'Registrar':
-        $rol = new UsuarioRol($ROL);
-        $c_info = new InformacionContacto($T_DOC, $N_DOC, $NAME, $APEL, $TEL, $EMAIL, $_SESSION['USER']);
-        $c_info->setID(rand(0, 999999999999999));
-        $usario = new Usuario($USER, $PASSWORD, $c_info, $rol);
-        $usario->setID(rand(0, 999999999999999));
-        $UsuarioController = new UsuarioController();
-        $UsuarioController->crearUsuario($usario);
+        if ($_SESSION['rol'] == "Administrador") {
+            $rol = new UsuarioRol($ROL);
+            $c_info = new InformacionContacto($T_DOC, $N_DOC, $NAME, $APEL, $TEL, $EMAIL, $_SESSION['USER']);
+            $c_info->setID(rand(0, 999999999999999));
+            $usario = new Usuario($USER, $PASSWORD, $c_info, $rol);
+            $usario->setID(rand(0, 999999999999999));
+            $UsuarioController = new UsuarioController();
+            $UsuarioController->crearUsuario($usario);
+        }else{
+            echo '<script language="javascript">alert("No tienes permisos para crear usuarios");</script>';
+        }
         break;
     default:
         # code...

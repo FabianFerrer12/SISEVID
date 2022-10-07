@@ -21,6 +21,7 @@ switch ($bot) {
         $success = $UsuarioController->consultarUsuario($_SESSION['USER'],$_SESSION['PASSWORD']);;
         if ($success) {
             $_SESSION['activeSesion'] = true;
+            $_SESSION['rol'] = $UsuarioController->consultarDescipcionRol($_SESSION['USER'],$_SESSION['PASSWORD']);
             //header("Location: ./view/ViewEvidencia.php");
             header("Location: ./view/Register.php");
         } else echo '<script language="javascript">alert("Usuario o contraseña incorrecta");</script>';

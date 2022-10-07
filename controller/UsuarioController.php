@@ -55,6 +55,22 @@ class UsuarioController
         return false;
     }
 
+    function consultarDescipcionRol(string $user,string $password)
+    {
+        $sql = "SELECT `usuario_roles`.`DESCRIPCION` FROM `usuario_roles` INNER JOIN `usuario` ON `usuario_roles`.`ID_USUARIO_ROLES` = `usuario`.`ID_USUARIO_ROLES` WHERE `usuario`.`USUARIO` = '".$user."' AND `usuario`.`CONTRASEÑA` = '".$password."'";
+        $DB = new ControlConexion();
+        $DB->abrirBd("localhost", "root", "", "SISEVID", 3306);
+        $recordSet = $DB->ejecutarSelect($sql);
+        if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
+            $DB->cerrarBd();
+            return $row['DESCRIPCION'];
+        }
+        $DB->cerrarBd();
+        return null;
+    }
+    
+
+
     function consultarRolEspecifico(string $description)
     {
         $usuarioRol = null;
@@ -64,7 +80,6 @@ class UsuarioController
         $recordSet = $DB->ejecutarSelect($sql);
         if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
             $usuarioRol = new UsuarioRol($description);
-            //me falla al intentar traer la columna id
             $usuarioRol->setID($row['ID_USUARIO_ROLES']);
         }
         $DB->cerrarBd();
