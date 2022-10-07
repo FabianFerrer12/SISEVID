@@ -3,6 +3,10 @@ include '../model/Evidencia.php';
 include '../controller/DB.php';
 include '../controller/EvidenciaController.php';
 
+session_start();
+
+//if (isset($_SESSION['activeSesion'])) header("Location: ../index.php");
+
 $idEvi = "";
 $titu = "";
 $descrip = "";

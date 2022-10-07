@@ -2,6 +2,9 @@
 include 'model/Evidencia.php';
 include 'controller/DB.php';
 include 'controller/UsuarioController.php';
+include 'model/Usuario/Usuario.php';
+include 'model/Usuario/InformacionContacto.php';
+include 'model/Usuario/UsuarioRol.php';
 
 session_start();
 $_SESSION['activeSesion'] = false;
@@ -16,7 +19,7 @@ if (isset($_POST['btn'])) $bot = $_POST['btn'];
 switch ($bot) {
     case 'Login':
         $UsuarioController = new UsuarioController();
-        $success = $UsuarioController->consultar($_SESSION['USER'],$_SESSION['PASSWORD']);;
+        $success = $UsuarioController->consultarUsuario($_SESSION['USER'],$_SESSION['PASSWORD']);;
         if ($success) {
             $_SESSION['activeSesion'] = true;
             header("Location: ./view/ViewEvidencia.php");

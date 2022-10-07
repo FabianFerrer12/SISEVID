@@ -2,6 +2,7 @@
 
 
 class InformacionContacto{
+    private string $ID;
     private string $TIPO_DOCUMENTO;
     private string $NUMERO_DOCUMENTO;
     private string $NOMBRES;
@@ -19,6 +20,14 @@ class InformacionContacto{
         $this->NUMERO_CONTACTO=$NUMERO_CONTACTO;
         $this->EMAIL=$EMAIL;
         $this->USUARIO_CREACION=$USUARIO_CREACION;
+    }
+
+    function getID(){
+        return $this->ID;
+    }
+
+    function setID($ID){
+        return $this->ID=$ID;
     }
 
     function getTIPO_DOCUMENTO(){
