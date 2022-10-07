@@ -1,5 +1,8 @@
 <?php
-
+include '../model/Usuario/UsuarioRol.php';
+include '../model/Usuario/Usuario.php';
+include '../model/Usuario/InformacionContacto.php';
+include '../controller/UsuarioController.php';
 session_start();
 
 //if (isset($_SESSION['activeSesion'])) header("Location: ../index.php");
@@ -15,7 +18,6 @@ if (isset($_POST['TEL'])) $TEL = $_POST['TEL'];
 if (isset($_POST['T_DOC'])) $T_DOC = $_POST['T_DOC'];
 if (isset($_POST['N_DOC'])) $N_DOC = $_POST['N_DOC'];
 if (isset($_POST['ROL'])) $ROL = $_POST['ROL'];
-
 if (isset($_POST['btn'])) $bot = $_POST['btn'];
 
 
@@ -24,19 +26,13 @@ switch ($bot) {
         echo '<script language="javascript">alert("Se borran todos los datos");</script>';
         break;
     case 'Registrar':
-        
         $rol = new UsuarioRol($ROL);
-        $c_info = new InformacionContacto($T_DOC,$N_DOC,$NAME,$APEL,$TEL, $EMAIL,$_SESSION['USER']);
-        $c_info -> setID("5");
-        $usario = new Usuario($USER,$PASSWORD,$c_info,$rol);
+        $c_info = new InformacionContacto($T_DOC, $N_DOC, $NAME, $APEL, $TEL, $EMAIL, $_SESSION['USER']);
+        $c_info->setID(rand(0, 999999999999999));
+        $usario = new Usuario($USER, $PASSWORD, $c_info, $rol);
+        $usario->setID(rand(0, 999999999999999));
         $UsuarioController = new UsuarioController();
         $success = $UsuarioController->crearUsuario($usario);
-    
-        if($susses){
-            echo '<script language="javascript">alert("Se registro correctamente el usuario");</script>';
-        }else{
-            echo '<script language="javascript">alert("No se pudo registrar el usuario");</script>';
-        }
         break;
     default:
         # code...
@@ -59,7 +55,7 @@ switch ($bot) {
 <body>
     <form id="formularioRegistro" method="post">
         <div class="container-fluid p-5 text-white text-center" style="background: #055160;">
-            <h1>Evidencias</h1>
+            <h1>Registro de usuario</h1>
         </div>
 
         <div class="container">

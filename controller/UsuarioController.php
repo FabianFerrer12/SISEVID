@@ -1,8 +1,7 @@
 <?php
-
+include_once 'DB.php';
 class UsuarioController
 {
-
     function crearUsuario(Usuario $user)
     {
 
@@ -26,18 +25,19 @@ class UsuarioController
             $DB->abrirBd("localhost", "root", "", "SISEVID", 3306);
             $DB->ejecutarComandoSql($sql);
 
-            $USUARIO_ROL = $user->getUSUARIO_ROL;
+            $USUARIO_ROL = $user->getUSUARIO_ROL();
             $description = $USUARIO_ROL->getDESCRIPCION();
             $usuarioController = new  UsuarioController();
-            $usuarioRolId = $usuarioController->consultarRolEspecifico($description);
-
+            $usuarioRol = $usuarioController->consultarRolEspecifico($description);
+            $usuarioRolId = $usuarioRol->getID();
             $sql = "INSERT INTO `sisevid`.`usuario` (`ID_USUARIO`,`ID_USUARIO_INFO_CONTACTO`,`ID_USUARIO_ROLES`,`USUARIO`,`CONTRASEÑA`,`USUARIO_CREACION`,`FECHA_CREACION`) VALUES ('" . $ID_USER . "','" . $ID_C_I . "','" . $usuarioRolId . "','" . $USER . "','" . $PASSWORD . "','" . $USUARIO_CREACION . "',CURDATE());";
 
             $DB->ejecutarComandoSql($sql);
             $DB->cerrarBd();
-            RETURN true;
+            echo '<script language="javascript">alert("Se registro correctamente el usuario");</script>';
         } catch (Exception $e) {
-            return false;
+            echo '<script language="javascript">alert("No se pudo registrar el usuario");</script>';
+            echo '<script language="javascript">alert("Exception: ' . $e . '");</script>';
         }
     }
 
@@ -64,7 +64,8 @@ class UsuarioController
         $recordSet = $DB->ejecutarSelect($sql);
         if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
             $usuarioRol = new UsuarioRol($description);
-            $usuarioRol->setID($row['ID']);
+            //me falla al intentar traer la columna id
+            $usuarioRol->setID($row['ID_USUARIO_ROLES']);
         }
         $DB->cerrarBd();
         return $usuarioRol;

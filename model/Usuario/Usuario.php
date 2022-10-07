@@ -9,6 +9,7 @@ class Usuario{
 
     
     function __construct(string $USER,string $PASSWORD,InformacionContacto $CONTACT_INFO,UsuarioRol $USUARIO_ROL){ //Constructor con parametros
+        $this->ID = "";
         $this->USER=$USER;
         $this->PASSWORD=$PASSWORD;
         $this->CONTACT_INFO=$CONTACT_INFO;  

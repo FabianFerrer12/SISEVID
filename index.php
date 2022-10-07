@@ -1,6 +1,5 @@
 <?php
 include 'model/Evidencia.php';
-include 'controller/DB.php';
 include 'controller/UsuarioController.php';
 include 'model/Usuario/Usuario.php';
 include 'model/Usuario/InformacionContacto.php';
@@ -22,7 +21,8 @@ switch ($bot) {
         $success = $UsuarioController->consultarUsuario($_SESSION['USER'],$_SESSION['PASSWORD']);;
         if ($success) {
             $_SESSION['activeSesion'] = true;
-            header("Location: ./view/ViewEvidencia.php");
+            //header("Location: ./view/ViewEvidencia.php");
+            header("Location: ./view/Register.php");
         } else echo '<script language="javascript">alert("Usuario o contraseña incorrecta");</script>';
         break;
     case 'Soporte':
