@@ -32,7 +32,7 @@ switch ($bot) {
         $usario = new Usuario($USER, $PASSWORD, $c_info, $rol);
         $usario->setID(rand(0, 999999999999999));
         $UsuarioController = new UsuarioController();
-        $success = $UsuarioController->crearUsuario($usario);
+        $UsuarioController->crearUsuario($usario);
         break;
     default:
         # code...
