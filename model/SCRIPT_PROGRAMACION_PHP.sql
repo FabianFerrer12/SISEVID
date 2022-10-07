@@ -461,3 +461,7 @@ INSERT INTO tblliteral VALUES('d26','Las directrices para la disposición de rec
 INSERT INTO tblliteral VALUES('e26','La realamentación de propiedad intelectual.','26');
 INSERT INTO tblliteral VALUES('f26','La roquiación de convenios y asociaciones relacionadas con el desarrollo de la investigación, innovación o creación artística y cultural.','26');
 INSERT INTO tblliteral VALUES('g26','Las directrices generales para el registro de publicaciones y resultados de investigación, innovación o creación artistica y cultural, en los sistemas de información institucional, nacional e internacional.','26');
+
+INSERT INTO `sisevid`.`usuario_info_contacto` (`ID_USUARIO_INFO_CONTACTO`,`TIPO_DOCUMENTO`,`NUMERO_DOCUMENTO`,`NOMBRES`,`APELLIDOS`,`NUMERO_CONTACTO`,`EMAIL`,`USUARIO_CREACION`,`FECHA_CREACION`) VALUES ('1','Cedula','1233456','Admin','Admin','123456789','admin@yopmail.com','default',CURDATE());
+INSERT INTO `sisevid`.`usuario_roles`(`ID_USUARIO_ROLES`,`DESCRIPCION`,`USUARIO_CREACION`,`FECHA_CREACION`) VALUES ('1','Administrador','Defaul',CURDATE()),('2','Asesor','Administrador',CURDATE());
+INSERT INTO `sisevid`.`usuario` (`ID_USUARIO`,`ID_USUARIO_INFO_CONTACTO`,`ID_USUARIO_ROLES`,`USUARIO`,`CONTRASEÑA`,`USUARIO_CREACION`,`FECHA_CREACION`) VALUES ('1','1','1','admin','admin1234','default',CURDATE());

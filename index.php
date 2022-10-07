@@ -1,21 +1,23 @@
 <?php
 include 'model/Evidencia.php';
 include 'controller/DB.php';
-include 'controller/EvidenciaController.php';
+include 'controller/UsuarioController.php';
 
 session_start();
-
+$_SESSION['activeSesion'] = false;
 $bot = "";
 
 if (isset($_POST['USER'])) $_SESSION['USER'] = $_POST['USER'];
 if (isset($_POST['PASSWORD'])) $_SESSION['PASSWORD'] = $_POST['PASSWORD'];
 if (isset($_POST['btn'])) $bot = $_POST['btn'];
-$_SESSION['activeSesion'] = false;
+
 
 
 switch ($bot) {
     case 'Login':
-        if ($_SESSION['USER'] == 'admin' and $_SESSION['PASSWORD']) {
+        $UsuarioController = new UsuarioController();
+        $success = $UsuarioController->consultar($_SESSION['USER'],$_SESSION['PASSWORD']);;
+        if ($success) {
             $_SESSION['activeSesion'] = true;
             header("Location: ./view/ViewEvidencia.php");
         } else echo '<script language="javascript">alert("Usuario o contraseña incorrecta");</script>';
@@ -39,7 +41,6 @@ switch ($bot) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </head>
 
 <body>
@@ -52,7 +53,7 @@ switch ($bot) {
                 <div class="row g-3 justify-content-center">
                     <div class="col-sm-3 ">
                         <label>Usuario</label>
-                        <input class="form-control" type="text" name="USER" value="<?php echo $_SESSION['USER'] ?>">
+                        <input class="form-control" type="text" name="USER" value="">
                     </div>
                 </div>
                 <div class="row g-3 justify-content-center">

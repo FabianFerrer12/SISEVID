@@ -2,7 +2,7 @@
 
 class ControlConexion{
 	
-	var $conn;
+	var $conn=null;
 	function __construct(){
 		$this->conn=null;
 	}

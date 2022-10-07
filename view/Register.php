@@ -1,9 +1,11 @@
 <?php
 include '../model/Evidencia.php';
 include '../controller/DB.php';
-include '../controller/EvidenciaController.php';
+include '../controller/UsuarioController.php';
 
 session_start();
+
+if (isset($_SESSION['activeSesion'])) header("Location: ./index.php");;
 
 $bot = '';
 
@@ -21,9 +23,6 @@ switch ($bot) {
         # code...
         break;
 }
-
-
-
 ?>
 
 <!DOCTYPE html>
