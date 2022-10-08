@@ -73,6 +73,38 @@
             return $this->objEvidencia;
         }
 
+        function buscar($titulo){
+            // $ID_Evidencia=$this->objEvidencia->getID_EVIDENCIA();
+            $mysqli = new mysqli("localhost","root","socrates","SISEVID");
+            $mat=[];
+            $i=0;
+
+            if ($mysqli -> connect_errno) {
+                echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+                exit();
+            }
+
+            $sql = "SELECT * FROM evidencia WHERE TITULO LIKE '%$titulo%'";
+
+            $resultado=$mysqli->query($sql);
+            while($row = $resultado->fetch_assoc()){
+                $mat[$i][0]=$row['TITULO'];
+                $mat[$i][1]=$row['DESCRIPCIÓN'];
+                $mat[$i][2]=$row['TIPO'];
+                $mat[$i][3]=$row['TIPO_ARCHIVO'];
+                $mat[$i][4]=$row['FECHA_CREACION_EVIDENCIA'];
+                $mat[$i][5]=$row['FECHA_REGISTRO_EVIDENCIA'];
+                $mat[$i][6]=$row['AUTORES'];
+                $mat[$i][7]=$row['OBSERVACION'];
+                $mat[$i][8]=$row['ESTADO'];
+                $mat[$i][9]=$row['ID_EVIDENCIA'];
+                $i++;
+            }
+            $resultado->free_result();
+            $mysqli -> close();
+            return $mat;
+        }
+
         function actualizar(){
             $titu=$this->objEvidencia->getTitulo();
             $des=$this->objEvidencia->getDescripcion();

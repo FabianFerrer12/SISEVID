@@ -27,6 +27,7 @@ $btnEditar = "";
 $btnNuevo = "";
 $btnGuardar = "";
 $idFila = "";
+$inputBuscar = "";
 
 if (isset($_POST['ID_EVIDENCIA'])) $idEvi = $_POST['ID_EVIDENCIA'];
 if (isset($_POST['TITULO'])) $titu = $_POST['TITULO'];
@@ -41,6 +42,8 @@ if (isset($_POST['OBSERVACION'])) $Observacion = $_POST['OBSERVACION'];
 if (isset($_POST['ESTADO'])) $Estado = $_POST['ESTADO'];
 // if (isset($_POST['USUARIO_CREACION'])) $UsuarioCreacion = $_POST['USUARIO_CREACION'];
 // if (isset($_POST['FECHA_CREACION'])) $FechaCreacion = $_POST['FECHA_CREACION'];
+
+if (isset($_POST['inputBuscar'])) $inputBuscar = $_POST['inputBuscar'];
 
 function borrar2($id_evidencia){
     echo '<script language="javascript">alert("entro");</script>';
@@ -108,17 +111,8 @@ switch ($bot) {
   case 'Consultar':
     $objEvidencia = new Evidencia($idEvi, "", "", "", "", "", "", "", "", "", "");
     $objEvidenciaController = new EvidenciaController($objEvidencia);
-    $objEvidencia = $objEvidenciaController->consultar();
-    // var_dump($objEvidencia);
-    $titu=$objEvidencia->getTitulo();
-    $descrip=$objEvidencia->getDescripcion();
-    $tipo=$objEvidencia->getTipo();
-    $TipoArchivo=$objEvidencia->getTipoArchivo();
-    $FechaCreacionEvi=$objEvidencia->getFechaCreacion();
-    $FechaRegistroEvi=$objEvidencia->getFechaRegistroEvidencia();
-    $Autores=$objEvidencia->getAutores();
-    $Observacion=$objEvidencia->getObservacion();
-    $Estado=$objEvidencia->getESTADO();
+    $mat = $objEvidenciaController->buscar($inputBuscar);
+ 
     break;
 
   case 'Modificar':
@@ -147,10 +141,6 @@ switch ($bot) {
     break;
 }
 
-
-
-
-//var_dump($objPersona); muestra todo el objto
 ?>
 
 <!DOCTYPE html>
@@ -163,6 +153,7 @@ switch ($bot) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/99291d97ef.js" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -182,43 +173,47 @@ switch ($bot) {
                     <li class="nav-item">
                         <a class="nav-link" href="./Register.php">Usuarios</a>
                     </li>
+                    <li class="nav-item dropdown" style="position: absolute;right: 80px;">
+                        <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user"></i>
+                            <?php echo $_SESSION['USER']; ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="./CerrarSession.php">Cerrar session</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
     <form id="idViewEvidencia" action="ViewEvidencia.php" method="post">
-        <!-- <div class="container-fluid p-5 text-white text-center" style="background: #055160;">
-            <h1>Evidencias</h1>
-        </div> -->
-
         <div class="container">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                value="aa" name="btnNuevo" style="position: relative;float: right;margin: 15px;">
-                <i class="fa-solid fa-plus" style= "margin-right: 10px;"></i>Nueva evidencia
-            </button>
-
-            <div class="row">
-                <div class="row g-3">
-                    <div class="col">
-                        <input type="submit" class="btn btn-success" value="Guardar" name="btn" />
+            <div style="margin:20px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div class="input-group" style="width: 35%;">
+                        <input class="form-control" type="text" placeholder="Titulo" name="inputBuscar" value="<?php echo $inputBuscar?>">
+                        <button type="submit" class="btn btn-primary" value="Consultar" name="btn"
+                            style="background: #055160;border-style: hidden"><i
+                                class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
-                    <div class="col">
-                        <input type="submit" class="btn btn-secondary" value="Consultar" name="btn" />
-                    </div>
-                    <div class="col">
-                        <input type="submit" class="btn btn-primary" value="Modificar" name="btn" />
-                    </div>
-                    <div class="col">
-                        <input type="submit" class="btn btn-danger" value="Borrar" name="btn" />
-                    </div>
-                    <div class="col">
-                        <input type="submit" class="btn btn-primary" value="Listar" name="btn" />
+                    <div style="display: flex;justify-content: space-between; width: 20%;">
+                        <div class="">
+                            <button type="submit" class="btn btn-primary" value="Listar" name="btn"
+                                style="background: #055160"><i class="fas fa-sync"></i></button>
+                        </div>
+                        <div class="">
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                style="background: #055160" data-bs-target="#staticBackdrop" name="btnNuevo">
+                                <i class="fa-solid fa-plus" style="margin-right: 10px;"></i>Nueva evidencia
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <table class="table">
-                <thead>
+            <table class="table table-striped" style="vertical-align: initial;">
+                <thead style="background: #055160;color: white;">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Titulo</th>
@@ -226,7 +221,7 @@ switch ($bot) {
                         <th scope="col">Tipo</th>
                         <th scope="col">Tipo archivo</th>
                         <th scope="col">Autores</th>
-                        <th scope="col">Accion</th>
+                        <th scope="col">Acciónes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -242,8 +237,8 @@ switch ($bot) {
                         <td><?php echo $mat[$i][6]; ?></td>
                         <td>
                             <div style="display: flex,justify-content: space-between;">
-                                <button class="btn btn-outline-primary" style="border-style: hidden"
-                                    value="<?php echo $mat[$i][9]; ?>" name="btnEditar" data-bs-toggle="modal"
+                                <button class="btn btn-outline-primary" style="border-style: hidden" type="submit"
+                                    data-bs-toggle="modal" value="<?php echo $mat[$i][9]; ?>" name="btnEditar"
                                     data-bs-target="#staticBackdrop"><i class="fa-solid fa-pen-to-square"></i></button>
                                 <button class="btn btn-outline-danger" style="border-style: hidden"
                                     value="<?php echo $mat[$i][9]; ?>" name="btnBorrar" type="submit"><i

@@ -38,7 +38,10 @@ switch ($bot) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style = "height:100%;
+  margin:0;
+  display: flex;
+  flex-direction: column;">
 
 <head>
     <title>Login Usuario</title>
@@ -48,9 +51,12 @@ switch ($bot) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
-<body>
+<body style = "height:100%;
+  margin:0;
+  display: flex;
+  flex-direction: column;background-image: linear-gradient(to top, #09203f 0%, #055160 100%);">
     <form id="idLogin" method="post">
-        <div class="container-fluid p-5 text-white text-center" style="background: #055160;">
+        <!-- <div class="container-fluid p-5 text-white text-center" style="background: #055160;">
             <h1>Login</h1>
         </div>
         <div class="container ">
@@ -73,7 +79,54 @@ switch ($bot) {
                     <input type="submit" class="btn btn-primary" value="Login" name="btn" />
                 </div>
             </div>
+        </div> -->
+
+
+
+        <div id="container"
+            style="height: 100%; width: 100%; background-size: cover; display: flex; justify-content: center; align-items: center;">
+            <div id="login" style="background: rgb(0 0 0 / 21%);  height: 330px; width: 35%;margin-top: 10%;">
+                <div style="text-align: center; color: white; font-size: 50px;"><i class="fas fa-user"></i></div>
+
+                <div id="tituloL" style="text-align: center; font-size: 50px; color: white;">Bienvenido</div>
+                <div id="contenido2">
+                    <div style="text-align: center;">
+
+                        <div class="form-floating" style="width: 70%; margin-left: 15%;margin-block: 15px;border-style:hidden;">
+                            <input class="form-control" id="floatingInput" placeholder="text" type="text" name="USER">
+                            <label for="floatingInput">Usuario</label>
+                        </div>
+                        <div class="form-floating " style="width: 70%; margin-left: 15%;margin-block: 15px;border-style:hidden;">
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                                name="PASSWORD">
+                            <label for="floatingPassword">Contraseña</label>
+                        </div>
+                        <div style="width: 70%; margin-left: 15%;margin-block: 15px;">
+                            <button type="submit" class="btn btn-primary" value="Login" name="btn"
+                                style="width: 100%;background: #043d48;border-style:hidden;">Ingresar</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </form>
 </body>
 

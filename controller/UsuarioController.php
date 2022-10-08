@@ -30,7 +30,8 @@ class UsuarioController
             $usuarioController = new  UsuarioController();
             $usuarioRol = $usuarioController->consultarRolEspecifico($description);
             $usuarioRolId = $usuarioRol->getID();
-            $sql = "INSERT INTO `sisevid`.`usuario` (`ID_USUARIO`,`ID_USUARIO_INFO_CONTACTO`,`ID_USUARIO_ROLES`,`USUARIO`,`CONTRASEÑA`,`USUARIO_CREACION`,`FECHA_CREACION`) VALUES ('" . $ID_USER . "','" . $ID_C_I . "','" . $usuarioRolId . "','" . $USER . "','" . $PASSWORD . "','" . $USUARIO_CREACION . "',CURDATE());";
+            
+            $sql = "INSERT INTO `sisevid`.`usuario` (`ID_USUARIO`,`ID_USUARIO_INFO_CONTACTO`,`ID_USUARIO_ROLES`,`USUARIO`,`CONTRASEÑA`,`USUARIO_CREACION`,`FECHA_CREACION`) VALUES ('" . $ID_USER . "','" . $ID_C_I . "','" . $usuarioRolId . "','" . $USER . "','" . $PASSWORD . "','" . $USUARIO_CREACION . "',NOW());";
 
             $DB->ejecutarComandoSql($sql);
             $DB->cerrarBd();
