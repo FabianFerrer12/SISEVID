@@ -245,7 +245,7 @@ switch ($btn) {
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabel">Evidencia</h5>
@@ -260,62 +260,32 @@ switch ($btn) {
                                         value="<?php echo $idEvi ?>">
                                 </div>
                                 <div class="col">
-                                    <label>Titulo</label>
+                                    <label>Nombres</label>
                                     <input class="form-control" type="text" name="TITULO" value="<?php echo $titu ?>">
                                 </div>
+
+                            </div>
+
+                            <div class="row g-3">
                                 <div class="col">
-                                    <label>Descripcion</label>
+                                    <label>Apellidos</label>
                                     <input class="form-control" type="text" name="DESCRIPCIÓN"
                                         value="<?php echo $descrip ?>">
                                 </div>
-                            </div>
-
-                            <div class="row g-3">
                                 <div class="col">
-                                    <label>Tipo</label>
+                                    <label>Nacionalidad</label>
                                     <input class="form-control" type="text" name="TIPO" value="<?php echo $tipo?>">
                                 </div>
-                                <div class="col">
-                                    <label>Tipo archivo</label>
-                                    <input class="form-control" type="text" name="TIPO_ARCHIVO"
-                                        value="<?php echo $TipoArchivo ?>">
-                                </div>
-                                <div class="col">
-                                    <label>Fecha creacion evidencia</label>
-                                    <input class="form-control" type="date" name="FECHA_CREACION_EVIDENCIA"
-                                        value="<?php echo $FechaCreacionEvi ?>">
-                                </div>
                             </div>
 
                             <div class="row g-3">
-                                <div class="col">
-                                    <label>Fecha registro evidencia</label>
+                                <div class="col-md-6">
+                                    <label>Fecha nacimiento</label>
                                     <input class="form-control" type="date" name="FECHA_REGISTRO_EVIDENCIA"
                                         value="<?php echo $FechaRegistroEvi ?>">
                                 </div>
-                                <div class="col">
-                                    <label>Autores</label>
-                                    <input class="form-control" type="text" name="AUTORES"
-                                        value="<?php echo $Autores?>">
-                                </div>
-                                <div class="col">
-                                    <label>Observacion</label>
-                                    <input class="form-control" type="text" name="OBSERVACION"
-                                        value="<?php echo $Observacion ?>">
-                                </div>
                             </div>
 
-                            <div class="row g-3">
-                                <div class="col-md-4">
-                                    <label>Lugar geografico</label>
-                                    <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO"
-                                        value="<?php echo $IDLugarGeo ?>">
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Estado</label>
-                                    <input class="form-control" type="text" name="ESTADO" value="<?php echo $Estado ?>">
-                                </div>
-                            </div>
 
                         </div>
                     </div>
