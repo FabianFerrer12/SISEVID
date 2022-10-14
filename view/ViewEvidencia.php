@@ -21,7 +21,8 @@ $Estado = "";
 $UsuarioCreacion = "";
 $FechaCreacion = "";
 $mat = [];
-$bot = "";
+$btnListar = "";
+$btn = "";
 $btnEliminar = "";
 $btnEditar = "";
 $btnNuevo = "";
@@ -40,25 +41,22 @@ if (isset($_POST['AUTORES'])) $Autores = $_POST['AUTORES'];
 if (isset($_POST['OBSERVACION'])) $Observacion = $_POST['OBSERVACION'];
 // if (isset($_POST['ID_LUGAR_GEOGRAFICO'])) $IDLugarGeo = $_POST['ID_LUGAR_GEOGRAFICO'];
 if (isset($_POST['ESTADO'])) $Estado = $_POST['ESTADO'];
-// if (isset($_POST['USUARIO_CREACION'])) $UsuarioCreacion = $_POST['USUARIO_CREACION'];
-// if (isset($_POST['FECHA_CREACION'])) $FechaCreacion = $_POST['FECHA_CREACION'];
-
 if (isset($_POST['inputBuscar'])) $inputBuscar = $_POST['inputBuscar'];
 
-function borrar2($id_evidencia){
-    echo '<script language="javascript">alert("entro");</script>';
-    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-    $objEvidenciaController = new EvidenciaController();
-    echo console.log($id_evidencia);
-    $objEvidenciaController->borrar($id_evidencia);
-}
+// function borrar2($id_evidencia){
+//     $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
+//     $objEvidenciaController = new EvidenciaController();
+//     $objEvidenciaController->borrar($id_evidencia);
+// }
 
 
-if (isset($_POST['btn'])) $bot = $_POST['btn'];
+if (isset($_POST['btn'])) $btn = $_POST['btn'];
+if (isset($_POST['btnListar'])) $btnListar = $_POST['btnListar'];
 if (isset($_POST['btnBorrar'])) $btnEliminar = $_POST['btnBorrar'];
 if (isset($_POST['btnEditar'])) $btnEditar = $_POST['btnEditar'];
 if (isset($_POST['btnGuardar'])) $btnGuardar = $_POST['btnGuardar'];
 if (isset($_POST['btnNuevo'])) $btnNuevo = $_POST['btnNuevo'];
+
 
 if($btnEliminar){
     $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
@@ -101,47 +99,38 @@ if($btnNuevo){
 }
 
 
-switch ($bot) {
-  case 'Guardar':
-    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-    $objEvidenciaController = new EvidenciaController($objEvidencia);
-    $objEvidenciaController->guardarEvidencia();
-    // var_dump($objEvidencia); 
+switch ($btn) {
+    case 'Consultar':
+        $objEvidencia = new Evidencia($idEvi, "", "", "", "", "", "", "", "", "", "");
+        $objEvidenciaController = new EvidenciaController($objEvidencia);
+        $mat = $objEvidenciaController->buscar($inputBuscar);
     break;
-  case 'Consultar':
-    $objEvidencia = new Evidencia($idEvi, "", "", "", "", "", "", "", "", "", "");
-    $objEvidenciaController = new EvidenciaController($objEvidencia);
-    $mat = $objEvidenciaController->buscar($inputBuscar);
- 
+    case 'Listar':
+        $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
+        $objEvidenciaController = new EvidenciaController($objEvidencia);
+        $mat = $objEvidenciaController->listar();
     break;
-
-  case 'Modificar':
-    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-    $objEvidenciaController = new EvidenciaController($objEvidencia);
-    $objEvidenciaController->actualizar();
+    case 'Nuevo':
+        $titu="";
+        $descrip="";
+        $tipo="";
+        $TipoArchivo="";
+        $FechaCreacionEvi="";
+        $FechaRegistroEvi="";
+        $Autores="";
+        $Observacion="";
+        $Estado="";
     break;
-
-  case 'Borrar':
-    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-    $objEvidenciaController = new EvidenciaController($objEvidencia);
-    $objEvidenciaController->borrar($btnEliminar);
-    break;
-
-  case 'Listar':
-    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-    $objEvidenciaController = new EvidenciaController($objEvidencia);
-    $mat = $objEvidenciaController->listar();
-
-    break;
-
-  default:
-    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-    $objEvidenciaController = new EvidenciaController($objEvidencia);
-    $mat = $objEvidenciaController->listar();
+    default:
+        $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
+        $objEvidenciaController = new EvidenciaController($objEvidencia);
+        $mat = $objEvidenciaController->listar();
     break;
 }
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -192,8 +181,9 @@ switch ($bot) {
             <div style="margin:20px;">
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                     <div class="input-group" style="width: 35%;">
-                        <input class="form-control" type="text" placeholder="Titulo" name="inputBuscar" value="<?php echo $inputBuscar?>">
-                        <button type="submit" class="btn btn-primary" value="Consultar" name="btn"
+                        <input class="form-control" type="text" placeholder="Titulo" name="inputBuscar"
+                            value="<?php echo $inputBuscar?>">
+                        <button type="submit" class="btn btn-primary" name="btn" value="Consultar"
                             style="background: #055160;border-style: hidden"><i
                                 class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
@@ -204,7 +194,7 @@ switch ($bot) {
                         </div>
                         <div class="">
                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                style="background: #055160" data-bs-target="#staticBackdrop" name="btnNuevo">
+                                style="background: #055160" data-bs-target="#staticBackdrop" name="btn" value="Nuevo">
                                 <i class="fa-solid fa-plus" style="margin-right: 10px;"></i>Nueva evidencia
                             </button>
                         </div>
