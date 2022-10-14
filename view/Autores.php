@@ -184,7 +184,7 @@ switch ($btn) {
             <div style="margin:20px;">
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                     <div class="input-group" style="width: 35%;">
-                        <input class="form-control" type="text" placeholder="Titulo" name="inputBuscar"
+                        <input class="form-control" type="text" placeholder="Nombre" name="inputBuscar"
                             value="<?php echo $inputBuscar?>">
                         <button type="submit" class="btn btn-primary" name="btn" value="Consultar"
                             style="background: #055160;border-style: hidden"><i
@@ -198,7 +198,7 @@ switch ($btn) {
                         <div class="">
                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                 style="background: #055160" data-bs-target="#staticBackdrop" name="btn" value="Nuevo">
-                                <i class="fa-solid fa-plus" style="margin-right: 10px;"></i>Nueva evidencia
+                                <i class="fa-solid fa-plus" style="margin-right: 10px;"></i>Nuevo autor
                             </button>
                         </div>
                     </div>
@@ -209,11 +209,10 @@ switch ($btn) {
                 <thead style="background: #055160;color: white;">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Titulo</th>
-                        <th scope="col">Descripcion</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Tipo archivo</th>
-                        <th scope="col">Autores</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">Nacionalidad</th>
+                        <th scope="col">Fecha nacimiento</th>
                         <th scope="col">Acciónes</th>
                     </tr>
                 </thead>
@@ -227,7 +226,6 @@ switch ($btn) {
                         <td><?php echo $mat[$i][1]; ?></td>
                         <td><?php echo $mat[$i][2]; ?></td>
                         <td><?php echo $mat[$i][3]; ?></td>
-                        <td><?php echo $mat[$i][6]; ?></td>
                         <td>
                             <div style="display: flex,justify-content: space-between;">
                                 <button class="btn btn-outline-primary" style="border-style: hidden" type="submit"
