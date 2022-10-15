@@ -121,6 +121,11 @@ switch ($btn) {
         $Observacion="";
         $Estado="";
     break;
+    case'Guardar':
+        $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
+        $objEvidenciaController = new EvidenciaController($objEvidencia);
+        $objEvidenciaController->guardarEvidencia();
+        break;
     default:
         $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
         // var_dump($objEvidencia);
