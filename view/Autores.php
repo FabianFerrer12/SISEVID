@@ -1,25 +1,18 @@
 <?php
-include '../model/Evidencia.php';
+include '../model/Autor.php';
 include '../controller/DB.php';
-include '../controller/EvidenciaController.php';
+include '../controller/AutorController.php';
+
 
 session_start();
 
 //if (isset($_SESSION['activeSesion'])) header("Location: ../index.php");
 
-$idEvi = "";
-$titu = "";
-$descrip = "";
-$tipo = "";
-$TipoArchivo = "";
-$FechaCreacionEvi = "";
-$FechaRegistroEvi = "";
-$Autores = "";
-$Observacion = "";
-$IDLugarGeo = "";
-$Estado = "";
-$UsuarioCreacion = "";
-$FechaCreacion = "";
+$id = "";
+$nombre = "";
+$apellido = "";
+$nacionalidad = "";
+$fechaNacimiento = "";
 $mat = [];
 $btnListar = "";
 $btn = "";
@@ -30,25 +23,11 @@ $btnGuardar = "";
 $idFila = "";
 $inputBuscar = "";
 
-if (isset($_POST['ID_EVIDENCIA'])) $idEvi = $_POST['ID_EVIDENCIA'];
-if (isset($_POST['TITULO'])) $titu = $_POST['TITULO'];
-if (isset($_POST['DESCRIPCIÓN'])) $descrip = $_POST['DESCRIPCIÓN'];
-if (isset($_POST['TIPO'])) $tipo = $_POST['TIPO'];
-if (isset($_POST['TIPO_ARCHIVO'])) $TipoArchivo = $_POST['TIPO_ARCHIVO'];
-if (isset($_POST['FECHA_CREACION_EVIDENCIA'])) $FechaCreacionEvi = $_POST['FECHA_CREACION_EVIDENCIA'];
-if (isset($_POST['FECHA_REGISTRO_EVIDENCIA'])) $FechaRegistroEvi = $_POST['FECHA_REGISTRO_EVIDENCIA'];
-if (isset($_POST['AUTORES'])) $Autores = $_POST['AUTORES'];
-if (isset($_POST['OBSERVACION'])) $Observacion = $_POST['OBSERVACION'];
-// if (isset($_POST['ID_LUGAR_GEOGRAFICO'])) $IDLugarGeo = $_POST['ID_LUGAR_GEOGRAFICO'];
-if (isset($_POST['ESTADO'])) $Estado = $_POST['ESTADO'];
-if (isset($_POST['inputBuscar'])) $inputBuscar = $_POST['inputBuscar'];
-
-// function borrar2($id_evidencia){
-//     $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-//     $objEvidenciaController = new EvidenciaController();
-//     $objEvidenciaController->borrar($id_evidencia);
-// }
-
+if (isset($_POST['ID_AUTOR'])) $id = $_POST['ID_AUTOR'];
+if (isset($_POST['NOMBRE'])) $nombre = $_POST['NOMBRE'];
+if (isset($_POST['APELLIDO'])) $apellido = $_POST['APELLIDO'];
+if (isset($_POST['NACIONALIDAD'])) $nacionalidad = $_POST['NACIONALIDAD'];
+if (isset($_POST['FECHA_NACIMIENTO'])) $fechaNacimiento = $_POST['FECHA_NACIMIENTO'];
 
 if (isset($_POST['btn'])) $btn = $_POST['btn'];
 if (isset($_POST['btnListar'])) $btnListar = $_POST['btnListar'];
@@ -59,72 +38,58 @@ if (isset($_POST['btnNuevo'])) $btnNuevo = $_POST['btnNuevo'];
 
 
 if($btnEliminar){
-    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-    $objEvidenciaController = new EvidenciaController($objEvidencia);
-    $objEvidenciaController->borrar($btnEliminar);
+    $objAutor = new Autor($id, $nombre, $apellido, $nacionalidad, $fechaNacimiento);
+    $objAutorController = new AutorController($objAutor);
+    $objAutorController->borrar($btnEliminar);
 }
 
 if($btnEditar){
-    $objEvidencia = new Evidencia($idEvi, "", "", "", "", "", "", "", "", "", "");
-    $objEvidenciaController = new EvidenciaController($objEvidencia);
-    $objEvidencia = $objEvidenciaController->consultar($btnEditar);
+    $objAutor = new Autor($id, "", "", "", "");
+    $objAutorController = new AutorController($objAutor);
+    $objAutor = $objAutorController->consultar($btnEditar);
 
-    $titu=$objEvidencia->getTitulo();
-    $descrip=$objEvidencia->getDescripcion();
-    $tipo=$objEvidencia->getTipo();
-    $TipoArchivo=$objEvidencia->getTipoArchivo();
-    $FechaCreacionEvi=$objEvidencia->getFechaCreacion();
-    $FechaRegistroEvi=$objEvidencia->getFechaRegistroEvidencia();
-    $Autores=$objEvidencia->getAutores();
-    $Observacion=$objEvidencia->getObservacion();
-    $Estado=$objEvidencia->getESTADO();
+    $nombre=$objAutor->getNombre();
+    $apellido=$objAutor->getApellido();
+    $nacionalidad=$objAutor->getNacionalidad();
+    $fechaNacimiento=$objAutor->getFechaNacimiento();
 }
 
-if($btnGuardar){
-    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-    $objEvidenciaController = new EvidenciaController($objEvidencia);
-    $objEvidenciaController->guardarEvidencia();
+if($btn='Guardar'){
+    $objAutor = new Autor($id, $nombre, $apellido, $nacionalidad, $fechaNacimiento);
+    $objAutorController = new AutorController($objAutor);
+    $objAutorController->guardarAutor();
 }
 
 if($btnNuevo){
-    $titu="";
-    $descrip="";
-    $tipo="";
-    $TipoArchivo="";
-    $FechaCreacionEvi="";
-    $FechaRegistroEvi="";
-    $Autores="";
-    $Observacion="";
-    $Estado="";
+    $nombre="";
+    $apellido="";
+    $nacionalidad="";
+    $fechaNacimiento="";
 }
 
 
 switch ($btn) {
     case 'Consultar':
-        $objEvidencia = new Evidencia($idEvi, "", "", "", "", "", "", "", "", "", "");
-        $objEvidenciaController = new EvidenciaController($objEvidencia);
-        $mat = $objEvidenciaController->buscar($inputBuscar);
+        $objAutor = new Autor($id, "", "", "", "");
+        $objAutorController = new AutorController($objAutor);
+        $mat = $objAutorController->buscar($inputBuscar);
     break;
     case 'Listar':
-        $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-        $objEvidenciaController = new EvidenciaController($objEvidencia);
-        $mat = $objEvidenciaController->listar();
+        $objAutor = new Autor($id, $nombre, $apellido, $nacionalidad, $fechaNacimiento);
+        $objAutorController = new AutorController($objAutor);
+        $mat = $objAutorController->listar();
     break;
     case 'Nuevo':
-        $titu="";
-        $descrip="";
-        $tipo="";
-        $TipoArchivo="";
-        $FechaCreacionEvi="";
-        $FechaRegistroEvi="";
-        $Autores="";
-        $Observacion="";
-        $Estado="";
+        $nombre="";
+        $apellido="";
+        $nacionalidad="";
+        $fechaNacimiento="";
     break;
     default:
-        $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-        $objEvidenciaController = new EvidenciaController($objEvidencia);
-        $mat = $objEvidenciaController->listar();
+        $objAutor = new Autor($id, $nombre, $apellido,$nacionalidad, $fechaNacimiento);
+        // var_dump($objAutor);
+        $objAutorController = new AutorController($objAutor);
+        $mat = $objAutorController->listar();
     break;
 }
 
@@ -179,7 +144,7 @@ switch ($btn) {
             </div>
         </div>
     </nav>
-    <form id="idViewEvidencia" action="ViewEvidencia.php" method="post">
+    <form id="idAutores" action="Autores.php" method="post">
         <div class="container">
             <div style="margin:20px;">
                 <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -229,10 +194,10 @@ switch ($btn) {
                         <td>
                             <div style="display: flex,justify-content: space-between;">
                                 <button class="btn btn-outline-primary" style="border-style: hidden" type="submit"
-                                    data-bs-toggle="modal" value="<?php echo $mat[$i][9]; ?>" name="btnEditar"
+                                    data-bs-toggle="modal" value="<?php echo $mat[$i][4]; ?>" name="btnEditar"
                                     data-bs-target="#staticBackdrop"><i class="fa-solid fa-pen-to-square"></i></button>
                                 <button class="btn btn-outline-danger" style="border-style: hidden"
-                                    value="<?php echo $mat[$i][9]; ?>" name="btnBorrar" type="submit"><i
+                                    value="<?php echo $mat[$i][4]; ?>" name="btnBorrar" type="submit"><i
                                         class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
@@ -256,12 +221,12 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>ID autor</label>
-                                    <input class="form-control" type="text" name="ID_EVIDENCIA"
-                                        value="<?php echo $idEvi ?>">
+                                    <input class="form-control" type="text" name="ID_AUTOR"
+                                        value="<?php echo $id ?>">
                                 </div>
                                 <div class="col">
                                     <label>Nombres</label>
-                                    <input class="form-control" type="text" name="TITULO" value="<?php echo $titu ?>">
+                                    <input class="form-control" type="text" name="NOMBRE" value="<?php echo $nombre ?>">
                                 </div>
 
                             </div>
@@ -269,20 +234,20 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>Apellidos</label>
-                                    <input class="form-control" type="text" name="DESCRIPCIÓN"
-                                        value="<?php echo $descrip ?>">
+                                    <input class="form-control" type="text" name="APELLIDO"
+                                        value="<?php echo $apellido ?>">
                                 </div>
                                 <div class="col">
                                     <label>Nacionalidad</label>
-                                    <input class="form-control" type="text" name="TIPO" value="<?php echo $tipo?>">
+                                    <input class="form-control" type="text" name="NACIONALIDAD" value="<?php echo $nacionalidad?>">
                                 </div>
                             </div>
 
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label>Fecha nacimiento</label>
-                                    <input class="form-control" type="date" name="FECHA_REGISTRO_EVIDENCIA"
-                                        value="<?php echo $FechaRegistroEvi ?>">
+                                    <input class="form-control" type="date" name="FECHA_NACIMIENTO"
+                                        value="<?php echo $fechaNacimiento ?>">
                                 </div>
                             </div>
 

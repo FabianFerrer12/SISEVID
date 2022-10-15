@@ -123,6 +123,7 @@ switch ($btn) {
     break;
     default:
         $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
+        // var_dump($objEvidencia);
         $objEvidenciaController = new EvidenciaController($objEvidencia);
         $mat = $objEvidenciaController->listar();
     break;

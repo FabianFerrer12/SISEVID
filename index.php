@@ -4,6 +4,7 @@ include 'controller/UsuarioController.php';
 include 'model/Usuario/Usuario.php';
 include 'model/Usuario/InformacionContacto.php';
 include 'model/Usuario/UsuarioRol.php';
+include 'model/Autor.php';
 
 session_start();
 $_SESSION['activeSesion'] = false;
