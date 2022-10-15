@@ -6,7 +6,7 @@ include '../controller/AutorController.php';
 
 session_start();
 
-//if (isset($_SESSION['activeSesion'])) header("Location: ../index.php");
+if (!$_SESSION['activeSesion']) header("Location: ../index.php");
 
 $id = "";
 $nombre = "";
@@ -35,6 +35,7 @@ if (isset($_POST['btnBorrar'])) $btnEliminar = $_POST['btnBorrar'];
 if (isset($_POST['btnEditar'])) $btnEditar = $_POST['btnEditar'];
 if (isset($_POST['btnGuardar'])) $btnGuardar = $_POST['btnGuardar'];
 if (isset($_POST['btnNuevo'])) $btnNuevo = $_POST['btnNuevo'];
+if (isset($_POST['inputBuscar'])) $inputBuscar = $_POST['inputBuscar'];
 
 
 if($btnEliminar){
@@ -52,12 +53,6 @@ if($btnEditar){
     $apellido=$objAutor->getApellido();
     $nacionalidad=$objAutor->getNacionalidad();
     $fechaNacimiento=$objAutor->getFechaNacimiento();
-}
-
-if($btn='Guardar'){
-    $objAutor = new Autor($id, $nombre, $apellido, $nacionalidad, $fechaNacimiento);
-    $objAutorController = new AutorController($objAutor);
-    $objAutorController->guardarAutor();
 }
 
 if($btnNuevo){
@@ -85,6 +80,12 @@ switch ($btn) {
         $nacionalidad="";
         $fechaNacimiento="";
     break;
+    case 'Guardar':
+        $objAutor = new Autor($id, $nombre, $apellido, $nacionalidad, $fechaNacimiento);
+        $objAutorController = new AutorController($objAutor);
+        $objAutorController->guardarAutor();
+        $mat = $objAutorController->listar();
+        break;
     default:
         $objAutor = new Autor($id, $nombre, $apellido,$nacionalidad, $fechaNacimiento);
         // var_dump($objAutor);
@@ -92,6 +93,7 @@ switch ($btn) {
         $mat = $objAutorController->listar();
     break;
 }
+
 
 ?>
 

@@ -5,7 +5,7 @@ include '../controller/EvidenciaController.php';
 
 session_start();
 
-//if (isset($_SESSION['activeSesion'])) header("Location: ../index.php");
+if (!$_SESSION['activeSesion']) header("Location: ../index.php");
 
 $idEvi = "";
 $titu = "";

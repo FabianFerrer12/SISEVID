@@ -5,7 +5,7 @@ include '../model/Usuario/InformacionContacto.php';
 include '../controller/UsuarioController.php';
 session_start();
 
-//if (isset($_SESSION['activeSesion'])) header("Location: ../index.php");
+if (!$_SESSION['activeSesion']) header("Location: ../index.php");
 
 $bot = '';
 
