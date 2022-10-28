@@ -56,6 +56,8 @@
             // Associative array
             $row = $result -> fetch_assoc();
             // echo ($row['AUTORES']);
+
+            $this->objEvidencia->setID_EVIDENCIA($row['ID_EVIDENCIA']);
             $this->objEvidencia->setTitulo($row['TITULO']);
             $this->objEvidencia->setDescripcion($row['DESCRIPCIÓN']);
             $this->objEvidencia->setTipo($row['TIPO']);

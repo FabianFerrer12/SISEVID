@@ -64,27 +64,11 @@ if($btnEliminar){
     $objEvidenciaController->borrar($btnEliminar);
 }
 
-if($btnEditar){
-    $objEvidencia = new Evidencia($idEvi, "", "", "", "", "", "", "", "", "", "");
-    $objEvidenciaController = new EvidenciaController($objEvidencia);
-    $objEvidencia = $objEvidenciaController->consultar($btnEditar);
-
-    $titu=$objEvidencia->getTitulo();
-    $descrip=$objEvidencia->getDescripcion();
-    $tipo=$objEvidencia->getTipo();
-    $TipoArchivo=$objEvidencia->getTipoArchivo();
-    $FechaCreacionEvi=$objEvidencia->getFechaCreacion();
-    $FechaRegistroEvi=$objEvidencia->getFechaRegistroEvidencia();
-    $Autores=$objEvidencia->getAutores();
-    $Observacion=$objEvidencia->getObservacion();
-    $Estado=$objEvidencia->getESTADO();
-}
-
-if($btnGuardar){
-    $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-    $objEvidenciaController = new EvidenciaController($objEvidencia);
-    $objEvidenciaController->guardarEvidencia();
-}
+// if($btnGuardar){
+//     $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
+//     $objEvidenciaController = new EvidenciaController($objEvidencia);
+//     $objEvidenciaController->guardarEvidencia();
+// }
 
 if($btnNuevo){
     $titu="";
@@ -125,7 +109,13 @@ switch ($btn) {
         $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
         $objEvidenciaController = new EvidenciaController($objEvidencia);
         $objEvidenciaController->guardarEvidencia();
-        break;
+        $mat = $objEvidenciaController->listar();
+    break;
+    case 'Editar':
+        $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
+        $objEvidenciaController = new EvidenciaController($objEvidencia);
+        $objEvidenciaController->actualizar();
+    break;
     default:
         $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
         // var_dump($objEvidencia);
@@ -135,8 +125,6 @@ switch ($btn) {
 }
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -149,7 +137,23 @@ switch ($btn) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/99291d97ef.js" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+    function llenarModal_actualizar(datos){
+    console.log(datos);
+    d=datos.split('||');
+    $("#ID_EVIDENCIA").val(d[0]);
+    $("#TITULO").val(d[1]);
+    $("#DESCRIPCIÓN").val(d[2]);
+    $("#TIPO").val(d[3]);
+    $("#TIPO_ARCHIVO").val(d[4]);
+    $("#FECHA_CREACION_EVIDENCIA").val(d[5]);
+    $("#FECHA_REGISTRO_EVIDENCIA").val(d[6]);
+    $("#AUTORES").val(d[7]);
+    $("#OBSERVACION").val(d[8]);
+    $("#ID_LUGAR_GEOGRAFICO").val(d[9]);
+    $("#ESTADO").val(d[10]);
+}</script>
 </head>
 
 <body>
@@ -214,7 +218,7 @@ switch ($btn) {
             <table class="table table-striped" style="vertical-align: initial;">
                 <thead style="background: #055160;color: white;">
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Titulo</th>
                         <th scope="col">Descripcion</th>
                         <th scope="col">Tipo</th>
@@ -223,34 +227,48 @@ switch ($btn) {
                         <th scope="col">Acciónes</th>
                     </tr>
                 </thead>
+                <?php 
+                $mysqli = new mysqli("localhost","root","","SISEVID");
+                if ($mysqli -> connect_errno) {
+                    echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+                    exit();
+                }
+                $sql = "SELECT * FROM evidencia";
+                $resultado=$mysqli->query($sql);
+                while($row = $resultado->fetch_array()){
+                    $datos=$row[0]."||".
+                    $row[1]."||".
+                    $row[2]."||".
+                    $row[3]."||".
+                    $row[4]."||".
+                    $row[5]."||".
+                    $row[6]."||".
+                    $row[7]."||".
+                    $row[8]."||".
+                    $row[9]."||".
+                    $row[10];
+                ?>
                 <tbody>
-                    <?php
-        for ($i = 0; $i < sizeof($mat); $i++) {
-        ?>
                     <tr>
-                        <th scope="row"><?php echo $i+1; ?></th>
-                        <td><?php echo $mat[$i][0]; ?></td>
-                        <td><?php echo $mat[$i][1]; ?></td>
-                        <td><?php echo $mat[$i][2]; ?></td>
-                        <td><?php echo $mat[$i][3]; ?></td>
-                        <td><?php echo $mat[$i][6]; ?></td>
+                        <th scope="row"><?php echo $row[0]; ?></th>
+                        <td><?php echo $row[1];  ?></td>
+                        <td><?php echo $row[2]; ?></td>
+                        <td><?php echo $row[3];?></td>
+                        <td><?php echo $row[4];?></td>
+                        <td><?php echo $row[7]; ?></td>
                         <td>
                             <div style="display: flex,justify-content: space-between;">
-                                <button class="btn btn-outline-primary" style="border-style: hidden" type="submit"
-                                    data-bs-toggle="modal" value="<?php echo $mat[$i][9]; ?>" name="btnEditar"
-                                    data-bs-target="#staticBackdrop"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger" style="border-style: hidden"
-                                    value="<?php echo $mat[$i][9]; ?>" name="btnBorrar" type="submit"><i
-                                        class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-outline-primary" style="border-style: hidden" type="button" data-bs-toggle="modal" onclick="llenarModal_actualizar('<?php echo $datos?>');"  data-bs-target="#editar"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-outline-danger" style="border-style: hidden" value="<?php echo $row[0]; ?>" name="btnBorrar" type="submit"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
-                    <?php } ?>
+                    <?php  } ?>
                 </tbody>
             </table>
         </div>
 
-        <!-- Modal -->
+        <!-- Modal nueva evidencia -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
@@ -265,33 +283,33 @@ switch ($btn) {
                                 <div class="col">
                                     <label>ID Evidencia</label>
                                     <input class="form-control" type="text" name="ID_EVIDENCIA"
-                                        value="<?php echo $idEvi ?>">
+                                        value="">
                                 </div>
                                 <div class="col">
                                     <label>Titulo</label>
-                                    <input class="form-control" type="text" name="TITULO" value="<?php echo $titu ?>">
+                                    <input class="form-control" type="text" name="TITULO" value="">
                                 </div>
                                 <div class="col">
                                     <label>Descripcion</label>
                                     <input class="form-control" type="text" name="DESCRIPCIÓN"
-                                        value="<?php echo $descrip ?>">
+                                        value="">
                                 </div>
                             </div>
 
                             <div class="row g-3">
                                 <div class="col">
                                     <label>Tipo</label>
-                                    <input class="form-control" type="text" name="TIPO" value="<?php echo $tipo?>">
+                                    <input class="form-control" type="text" name="TIPO" value="">
                                 </div>
                                 <div class="col">
                                     <label>Tipo archivo</label>
                                     <input class="form-control" type="text" name="TIPO_ARCHIVO"
-                                        value="<?php echo $TipoArchivo ?>">
+                                        value="">
                                 </div>
                                 <div class="col">
                                     <label>Fecha creacion evidencia</label>
                                     <input class="form-control" type="date" name="FECHA_CREACION_EVIDENCIA"
-                                        value="<?php echo $FechaCreacionEvi ?>">
+                                        value="">
                                 </div>
                             </div>
 
@@ -299,17 +317,17 @@ switch ($btn) {
                                 <div class="col">
                                     <label>Fecha registro evidencia</label>
                                     <input class="form-control" type="date" name="FECHA_REGISTRO_EVIDENCIA"
-                                        value="<?php echo $FechaRegistroEvi ?>">
+                                        value="">
                                 </div>
                                 <div class="col">
                                     <label>Autores</label>
                                     <input class="form-control" type="text" name="AUTORES"
-                                        value="<?php echo $Autores?>">
+                                        value="">
                                 </div>
                                 <div class="col">
                                     <label>Observacion</label>
                                     <input class="form-control" type="text" name="OBSERVACION"
-                                        value="<?php echo $Observacion ?>">
+                                        value="">
                                 </div>
                             </div>
 
@@ -317,11 +335,11 @@ switch ($btn) {
                                 <div class="col-md-4">
                                     <label>Lugar geografico</label>
                                     <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO"
-                                        value="<?php echo $IDLugarGeo ?>">
+                                        value="">
                                 </div>
                                 <div class="col-md-4">
                                     <label>Estado</label>
-                                    <input class="form-control" type="text" name="ESTADO" value="<?php echo $Estado ?>">
+                                    <input class="form-control" type="text" name="ESTADO" value="">
                                 </div>
                             </div>
 
@@ -331,6 +349,93 @@ switch ($btn) {
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                         <button class="btn btn-primary" value="Guardar" name="btn" type="submit"><i
                                 class="fa-regular fa-floppy-disk"></i> Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal editar -->
+
+        <div class="modal fade" id="editar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Evidencia</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="row g-3">
+                                <div class="col">
+                                    <label>ID Evidencia</label>
+                                    <input class="form-control" type="text" name="ID_EVIDENCIA" id="ID_EVIDENCIA" disabled
+                                        value="">
+                                </div>
+                                <div class="col">
+                                    <label>Titulo</label>
+                                    <input class="form-control" type="text" name="TITULO" id="TITULO" value="">
+                                </div>
+                                <div class="col">
+                                    <label>Descripcion</label>
+                                    <input class="form-control" type="text" name="DESCRIPCIÓN" id="DESCRIPCIÓN"
+                                        value="">
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col">
+                                    <label>Tipo</label>
+                                    <input class="form-control" type="text" name="TIPO" id="TIPO" value="">
+                                </div>
+                                <div class="col">
+                                    <label>Tipo archivo</label>
+                                    <input class="form-control" type="text" name="TIPO_ARCHIVO" id="TIPO_ARCHIVO"
+                                        value="">
+                                </div>
+                                <div class="col">
+                                    <label>Fecha creacion evidencia</label>
+                                    <input class="form-control" type="date" name="FECHA_CREACION_EVIDENCIA" id="FECHA_CREACION_EVIDENCIA"
+                                        value="">
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col">
+                                    <label>Fecha registro evidencia</label>
+                                    <input class="form-control" type="date" name="FECHA_REGISTRO_EVIDENCIA" id="FECHA_REGISTRO_EVIDENCIA"
+                                        value="">
+                                </div>
+                                <div class="col">
+                                    <label>Autores</label>
+                                    <input class="form-control" type="text" name="AUTORES" id="AUTORES"
+                                        value="">
+                                </div>
+                                <div class="col">
+                                    <label>Observacion</label>
+                                    <input class="form-control" type="text" name="OBSERVACION" id="OBSERVACION"
+                                        value="">
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label>Lugar geografico</label>
+                                    <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO" id="ID_LUGAR_GEOGRAFICO"
+                                        value="">
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Estado</label>
+                                    <input class="form-control" type="text" name="ESTADO" id="ESTADO" value="">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary" value="Editar" name="btn" type="submit"><i
+                                class="fa-regular fa-floppy-disk"></i> Editar</button>
                     </div>
                 </div>
             </div>

@@ -44,16 +44,6 @@ if($btnEliminar){
     $objAutorController->borrar($btnEliminar);
 }
 
-if($btnEditar){
-    $objAutor = new Autor($id, "", "", "", "");
-    $objAutorController = new AutorController($objAutor);
-    $objAutor = $objAutorController->consultar($btnEditar);
-
-    $nombre=$objAutor->getNombre();
-    $apellido=$objAutor->getApellido();
-    $nacionalidad=$objAutor->getNacionalidad();
-    $fechaNacimiento=$objAutor->getFechaNacimiento();
-}
 
 if($btnNuevo){
     $nombre="";
@@ -86,6 +76,12 @@ switch ($btn) {
         $objAutorController->guardarAutor();
         $mat = $objAutorController->listar();
         break;
+    case 'Actualizar':
+        $objAutor = new Autor($id, $nombre, $apellido, $nacionalidad, $fechaNacimiento);
+        $objAutorController = new AutorController($objAutor);
+        $objAutorController->actualizar();
+        $mat = $objAutorController->listar();
+    break;
     default:
         $objAutor = new Autor($id, $nombre, $apellido,$nacionalidad, $fechaNacimiento);
         // var_dump($objAutor);
@@ -110,7 +106,18 @@ switch ($btn) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/99291d97ef.js" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+    function llenarModal_actualizar(datos){
+    console.log(datos);
+    d=datos.split('||');
+    $("#ID_AUTOR").val(d[0]);
+    $("#NOMBRE").val(d[1]);
+    $("#APELLIDO").val(d[2]);
+    $("#NACIONALIDAD").val(d[3]);
+    $("#FECHA_NACIMIENTO").val(d[4]);
+}
+    </script>
 </head>
 
 <body>
@@ -175,7 +182,7 @@ switch ($btn) {
             <table class="table table-striped" style="vertical-align: initial;">
                 <thead style="background: #055160;color: white;">
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Nombres</th>
                         <th scope="col">Apellidos</th>
                         <th scope="col">Nacionalidad</th>
@@ -183,23 +190,37 @@ switch ($btn) {
                         <th scope="col">Acciónes</th>
                     </tr>
                 </thead>
+
+                <?php 
+                $mysqli = new mysqli("localhost","root","","SISEVID");
+                if ($mysqli -> connect_errno) {
+                    echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+                    exit();
+                }
+                $sql = "SELECT * FROM autor";
+                $resultado=$mysqli->query($sql);
+                while($row = $resultado->fetch_array()){
+                    $datos=$row[0]."||".
+                    $row[1]."||".
+                    $row[2]."||".
+                    $row[3]."||".
+                    $row[4]."||".
+                    $row[5]."||".
+                    $row[6];
+                ?>
                 <tbody>
-                    <?php
-        for ($i = 0; $i < sizeof($mat); $i++) {
-        ?>
                     <tr>
-                        <th scope="row"><?php echo $i+1; ?></th>
-                        <td><?php echo $mat[$i][0]; ?></td>
-                        <td><?php echo $mat[$i][1]; ?></td>
-                        <td><?php echo $mat[$i][2]; ?></td>
-                        <td><?php echo $mat[$i][3]; ?></td>
+                        <th scope="row"><?php echo $row[0]; ?></th>
+                        <td><?php echo $row[1]; ?></td>
+                        <td><?php echo $row[2]; ?></td>
+                        <td><?php echo $row[3]; ?></td>
+                        <td><?php echo $row[4]; ?></td>
                         <td>
                             <div style="display: flex,justify-content: space-between;">
-                                <button class="btn btn-outline-primary" style="border-style: hidden" type="submit"
-                                    data-bs-toggle="modal" value="<?php echo $mat[$i][4]; ?>" name="btnEditar"
-                                    data-bs-target="#staticBackdrop"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-outline-primary" style="border-style: hidden" type="button"
+                                    data-bs-toggle="modal" onclick="llenarModal_actualizar('<?php echo $datos?>');" data-bs-target="#editar"><i class="fa-solid fa-pen-to-square"></i></button>
                                 <button class="btn btn-outline-danger" style="border-style: hidden"
-                                    value="<?php echo $mat[$i][4]; ?>" name="btnBorrar" type="submit"><i
+                                    value="<?php echo $row[0]; ?>" name="btnBorrar" type="submit"><i
                                         class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
@@ -209,7 +230,7 @@ switch ($btn) {
             </table>
         </div>
 
-        <!-- Modal -->
+        <!-- Modal  nuevo-->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -260,6 +281,63 @@ switch ($btn) {
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                         <button class="btn btn-primary" value="Guardar" name="btn" type="submit"><i
                                 class="fa-regular fa-floppy-disk"></i> Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+                <!-- Modal  editar-->
+                <div class="modal fade" id="editar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Autor</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="row g-3">
+                                <div class="col">
+                                    <label>ID autor</label>
+                                    <input class="form-control" type="text" name="ID_AUTOR" id="ID_AUTOR" disabled
+                                        value="">
+                                </div>
+                                <div class="col">
+                                    <label>Nombres</label>
+                                    <input class="form-control" type="text" name="NOMBRE" id="NOMBRE" value="">
+                                </div>
+
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col">
+                                    <label>Apellidos</label>
+                                    <input class="form-control" type="text" name="APELLIDO" id="APELLIDO"
+                                        value="">
+                                </div>
+                                <div class="col">
+                                    <label>Nacionalidad</label>
+                                    <input class="form-control" type="text" name="NACIONALIDAD" id="NACIONALIDAD" value="">
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label>Fecha nacimiento</label>
+                                    <input class="form-control" type="date" name="FECHA_NACIMIENTO" id="FECHA_NACIMIENTO"
+                                        value="">
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary" value="Actualziar" name="btn" type="submit"><i
+                                class="fa-regular fa-floppy-disk"></i> Editar</button>
                     </div>
                 </div>
             </div>
