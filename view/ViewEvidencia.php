@@ -135,15 +135,12 @@ switch ($btn) {
     break;
     case'Guardar':
         $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-        $objEvidenciaController = new EvidenciaController($objEvidencia);
-        var_dump($objEvidencia);
-        
+        $objEvidenciaController = new EvidenciaController($objEvidencia);        
         $objEvidenciaController->guardarEvidencia();
         $mat = $objEvidenciaController->listar();
     break;
     case 'Editar':
         $objEvidencia = new Evidencia($idEvi2, $titu2, $descrip2, $tipo2, $TipoArchivo2, $FechaCreacionEvi2, $FechaRegistroEvi2, $Autores2, $Observacion2, $IDLugarGeo2, $Estado2);
-        var_dump($objEvidencia);
         $objEvidenciaController = new EvidenciaController($objEvidencia);
         $objEvidenciaController->actualizar();
     break;
