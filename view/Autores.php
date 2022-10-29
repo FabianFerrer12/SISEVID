@@ -13,6 +13,11 @@ $nombre = "";
 $apellido = "";
 $nacionalidad = "";
 $fechaNacimiento = "";
+$id2 = "";
+$nombre2 = "";
+$apellido2 = "";
+$nacionalidad2 = "";
+$fechaNacimiento2 = "";
 $mat = [];
 $btnListar = "";
 $btn = "";
@@ -28,6 +33,14 @@ if (isset($_POST['NOMBRE'])) $nombre = $_POST['NOMBRE'];
 if (isset($_POST['APELLIDO'])) $apellido = $_POST['APELLIDO'];
 if (isset($_POST['NACIONALIDAD'])) $nacionalidad = $_POST['NACIONALIDAD'];
 if (isset($_POST['FECHA_NACIMIENTO'])) $fechaNacimiento = $_POST['FECHA_NACIMIENTO'];
+
+if (isset($_POST['ID_AUTOR2'])) $id2 = $_POST['ID_AUTOR2'];
+if (isset($_POST['NOMBRE2'])) $nombre2 = $_POST['NOMBRE2'];
+if (isset($_POST['APELLIDO2'])) $apellido2 = $_POST['APELLIDO2'];
+if (isset($_POST['NACIONALIDAD2'])) $nacionalidad2 = $_POST['NACIONALIDAD2'];
+if (isset($_POST['FECHA_NACIMIENTO2'])) $fechaNacimiento2 = $_POST['FECHA_NACIMIENTO2'];
+
+
 
 if (isset($_POST['btn'])) $btn = $_POST['btn'];
 if (isset($_POST['btnListar'])) $btnListar = $_POST['btnListar'];
@@ -71,13 +84,15 @@ switch ($btn) {
         $fechaNacimiento="";
     break;
     case 'Guardar':
-        $objAutor = new Autor($id, $nombre, $apellido, $nacionalidad, $fechaNacimiento);
+        $objAutor = new Autor($id2, $nombre2, $apellido2, $nacionalidad2, $fechaNacimiento2);
+        var_dump($objAutor);
         $objAutorController = new AutorController($objAutor);
         $objAutorController->guardarAutor();
         $mat = $objAutorController->listar();
         break;
     case 'Actualizar':
         $objAutor = new Autor($id, $nombre, $apellido, $nacionalidad, $fechaNacimiento);
+        var_dump($objAutor);
         $objAutorController = new AutorController($objAutor);
         $objAutorController->actualizar();
         $mat = $objAutorController->listar();
@@ -192,7 +207,7 @@ switch ($btn) {
                 </thead>
 
                 <?php 
-                $mysqli = new mysqli("localhost","root","","SISEVID");
+                $mysqli = new mysqli("localhost","root","socrates","SISEVID");
                 if ($mysqli -> connect_errno) {
                     echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
                     exit();
@@ -244,12 +259,12 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>ID autor</label>
-                                    <input class="form-control" type="text" name="ID_AUTOR"
-                                        value="<?php echo $id ?>">
+                                    <input class="form-control" type="text" name="ID_AUTOR2"
+                                        value="<?php echo $id2 ?>">
                                 </div>
                                 <div class="col">
                                     <label>Nombres</label>
-                                    <input class="form-control" type="text" name="NOMBRE" value="<?php echo $nombre ?>">
+                                    <input class="form-control" type="text" name="NOMBRE2" value="<?php echo $nombre2 ?>">
                                 </div>
 
                             </div>
@@ -257,20 +272,20 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>Apellidos</label>
-                                    <input class="form-control" type="text" name="APELLIDO"
-                                        value="<?php echo $apellido ?>">
+                                    <input class="form-control" type="text" name="APELLIDO2"
+                                        value="<?php echo $apellido2 ?>">
                                 </div>
                                 <div class="col">
                                     <label>Nacionalidad</label>
-                                    <input class="form-control" type="text" name="NACIONALIDAD" value="<?php echo $nacionalidad?>">
+                                    <input class="form-control" type="text" name="NACIONALIDAD2" value="<?php echo $nacionalidad2?>">
                                 </div>
                             </div>
 
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label>Fecha nacimiento</label>
-                                    <input class="form-control" type="date" name="FECHA_NACIMIENTO"
-                                        value="<?php echo $fechaNacimiento ?>">
+                                    <input class="form-control" type="date" name="FECHA_NACIMIENTO2"
+                                        value="<?php echo $fechaNacimiento2 ?>">
                                 </div>
                             </div>
 
@@ -301,12 +316,12 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>ID autor</label>
-                                    <input class="form-control" type="text" name="ID_AUTOR" id="ID_AUTOR" disabled
-                                        value="">
+                                    <input class="form-control" type="text" name="ID_AUTOR" id="ID_AUTOR" readonly="readonly" 
+                                        value="<?php echo $id ?>">
                                 </div>
                                 <div class="col">
                                     <label>Nombres</label>
-                                    <input class="form-control" type="text" name="NOMBRE" id="NOMBRE" value="">
+                                    <input class="form-control" type="text" name="NOMBRE" id="NOMBRE"  value="<?php echo $nombre ?>">
                                 </div>
 
                             </div>
@@ -315,11 +330,11 @@ switch ($btn) {
                                 <div class="col">
                                     <label>Apellidos</label>
                                     <input class="form-control" type="text" name="APELLIDO" id="APELLIDO"
-                                        value="">
+                                        value="<?php echo $apellido ?>">
                                 </div>
                                 <div class="col">
                                     <label>Nacionalidad</label>
-                                    <input class="form-control" type="text" name="NACIONALIDAD" id="NACIONALIDAD" value="">
+                                    <input class="form-control" type="text" name="NACIONALIDAD" id="NACIONALIDAD" value="<?php echo $nacionalidad?>">
                                 </div>
                             </div>
 
@@ -327,7 +342,7 @@ switch ($btn) {
                                 <div class="col-md-6">
                                     <label>Fecha nacimiento</label>
                                     <input class="form-control" type="date" name="FECHA_NACIMIENTO" id="FECHA_NACIMIENTO"
-                                        value="">
+                                        value="<?php echo $fechaNacimiento ?>">
                                 </div>
                             </div>
 
@@ -336,7 +351,7 @@ switch ($btn) {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        <button class="btn btn-primary" value="Actualziar" name="btn" type="submit"><i
+                        <button class="btn btn-primary" value="Actualizar" name="btn" type="submit"><i
                                 class="fa-regular fa-floppy-disk"></i> Editar</button>
                     </div>
                 </div>

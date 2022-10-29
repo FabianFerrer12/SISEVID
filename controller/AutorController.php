@@ -18,7 +18,7 @@
             $USUARIO_CREACION=$_SESSION['USER'];
             $sql="INSERT INTO autor (ID_AUTOR,NOMBRES,APELLIDOS,NACIONALIDAD,FECHA_NACIMIENTO,USUARIO_CREACION,FECHA_CREACION) VALUES('$id','$nombre','$apellido','$nacionalidad','$fechaNacimiento','$USUARIO_CREACION',NOW())";
             $DB = new ControlConexion();
-            $DB->abrirBd("localhost","root","","SISEVID", 3306);
+            $DB->abrirBd("localhost","root","socrates","SISEVID", 3306);
             $DB->ejecutarComandoSql($sql);
             $DB->cerrarBd();
 
@@ -27,14 +27,14 @@
 
             $sql="DELETE FROM autor WHERE ID_AUTOR='$id_autor'";
             $DB = new ControlConexion();
-            $DB->abrirBd("localhost","root","","SISEVID", 3306);
+            $DB->abrirBd("localhost","root","socrates","SISEVID", 3306);
             $DB->ejecutarComandoSql($sql);
             $DB->cerrarBd();
 
         }
         function consultar ($id_autor){
 
-            $mysqli = new mysqli("localhost","root","","SISEVID");
+            $mysqli = new mysqli("localhost","root","socrates","SISEVID");
             if ($mysqli -> connect_errno) {
                 echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
                 exit();
@@ -53,7 +53,7 @@
             return $this->objAutor;
         }
         function buscar($nombre){
-            $mysqli = new mysqli("localhost","root","","SISEVID");
+            $mysqli = new mysqli("localhost","root","socrates","SISEVID");
             $mat=[];
             $i=0;
             if ($mysqli -> connect_errno) {
@@ -80,12 +80,12 @@
             $apellido=$this->objAutor->getApellido();
             $nacionalidad=$this->objAutor->getNacionalidad();
             $fechaNacimiento=$this->objAutor->getFechaNacimiento();
-            $mysqli = new mysqli("localhost","root","","SISEVID");
+            $mysqli = new mysqli("localhost","root","socrates","SISEVID");
             if ($mysqli -> connect_errno) {
                 echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
                 exit();
             }
-            $sql="UPDATE autor SET NOMBRES='$nombre',APELLIDOS='$apellido',FECHA_NACIMIENTO='$fechaNacimiento' WHERE ID_AUTOR='$id'";
+            $sql="UPDATE autor SET NOMBRES='$nombre',APELLIDOS='$apellido',FECHA_NACIMIENTO='$fechaNacimiento' ,NACIONALIDAD = '$nacionalidad' WHERE ID_AUTOR='$id'";
             $result = $mysqli -> query($sql);
             $mysqli -> close();
         }
@@ -95,7 +95,7 @@
             $i=0;
             $sql="SELECT * FROM autor";
             $DB = new ControlConexion();
-            $DB->abrirBd("localhost","root","","SISEVID", 3306);
+            $DB->abrirBd("localhost","root","socrates","SISEVID", 3306);
             $recordSet=$DB->ejecutarSelect($sql);
             while($row = $recordSet->fetch_array(MYSQLI_BOTH)){
                 $mat[$i][0]=$row['NOMBRES'];
