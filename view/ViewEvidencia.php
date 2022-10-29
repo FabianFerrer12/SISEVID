@@ -193,18 +193,18 @@ switch ($btn) {
     <script>
     function borrarSwal() {
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Deseas borrar el registro?',
+            text: "Esta acción no se puede revertir!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Si, eliminalo!'
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
+                    'Eliminado!',
+                    'El registro ha sido eliminado.',
                     'success'
                 )
             }
@@ -321,8 +321,8 @@ switch ($btn) {
                                     data-bs-toggle="modal" onclick="llenarModal_actualizar('<?php echo $datos?>');"
                                     data-bs-target="#editar"><i class="fa-solid fa-pen-to-square"></i></button>
                                 <button class="btn btn-outline-danger" style="border-style: hidden"
-                                    value="<?php echo $row[0]; ?>" name="btnBorrar" type="button" onclick="borrarSwal()"><i
-                                        class="fa-solid fa-trash"></i></button>
+                                    value="<?php echo $row[0]; ?>" name="btnBorrar" type="button"
+                                    onclick="borrarSwal()"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
@@ -345,16 +345,17 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>ID Evidencia</label>
-                                    <input class="form-control" type="text" name="ID_EVIDENCIA2"
+                                    <input class="form-control" type="text" name="ID_EVIDENCIA2" required
                                         value="<?php echo $idEvi2 ?>">
                                 </div>
                                 <div class="col">
                                     <label>Titulo</label>
-                                    <input class="form-control" type="text" name="TITULO2" value="<?php echo $titu2 ?>">
+                                    <input class="form-control" type="text" name="TITULO2" required
+                                        value="<?php echo $titu2 ?>">
                                 </div>
                                 <div class="col">
                                     <label>Descripcion</label>
-                                    <input class="form-control" type="text" name="DESCRIPCIÓN2"
+                                    <input class="form-control" type="text" name="DESCRIPCIÓN2" required
                                         value="<?php echo $descrip2 ?>">
                                 </div>
                             </div>
@@ -362,16 +363,17 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>Tipo</label>
-                                    <input class="form-control" type="text" name="TIPO2" value="<?php echo $tipo2?>">
+                                    <input class="form-control" type="text" name="TIPO2" required
+                                        value="<?php echo $tipo2?>">
                                 </div>
                                 <div class="col">
                                     <label>Tipo archivo</label>
-                                    <input class="form-control" type="text" name="TIPO_ARCHIVO2"
+                                    <input class="form-control" type="text" name="TIPO_ARCHIVO2" required
                                         value="<?php echo $TipoArchivo2 ?>">
                                 </div>
                                 <div class="col">
                                     <label>Fecha creacion evidencia</label>
-                                    <input class="form-control" type="date" name="FECHA_CREACION_EVIDENCIA2"
+                                    <input class="form-control" type="date" name="FECHA_CREACION_EVIDENCIA2" required
                                         value="<?php echo $FechaCreacionEvi2 ?>">
                                 </div>
                             </div>
@@ -379,17 +381,17 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>Fecha registro evidencia</label>
-                                    <input class="form-control" type="date" name="FECHA_REGISTRO_EVIDENCIA2"
+                                    <input class="form-control" type="date" name="FECHA_REGISTRO_EVIDENCIA2" required
                                         value="<?php echo $FechaRegistroEvi2 ?>">
                                 </div>
                                 <div class="col">
                                     <label>Autores</label>
-                                    <input class="form-control" type="text" name="AUTORES2"
+                                    <input class="form-control" type="text" name="AUTORES2" required
                                         value="<?php echo $Autores2?>">
                                 </div>
                                 <div class="col">
                                     <label>Observacion</label>
-                                    <input class="form-control" type="text" name="OBSERVACION2"
+                                    <input class="form-control" type="text" name="OBSERVACION2" required
                                         value="<?php echo $Observacion2 ?>">
                                 </div>
                             </div>
@@ -397,12 +399,12 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col-md-4">
                                     <label>Lugar geografico</label>
-                                    <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO2"
+                                    <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO2" required
                                         value="<?php echo $IDLugarGeo2 ?>">
                                 </div>
                                 <div class="col-md-4">
                                     <label>Estado</label>
-                                    <input class="form-control" type="text" name="ESTADO2"
+                                    <input class="form-control" type="text" name="ESTADO2" required
                                         value="<?php echo $Estado2 ?>">
                                 </div>
                             </div>
@@ -433,17 +435,17 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>ID Evidencia</label>
-                                    <input class="form-control" type="text" name="ID_EVIDENCIA" id="ID_EVIDENCIA"
+                                    <input class="form-control" type="text" required name="ID_EVIDENCIA" id="ID_EVIDENCIA"
                                         readonly="readonly" value="<?php echo $idEvi ?>">
                                 </div>
                                 <div class="col">
                                     <label>Titulo</label>
-                                    <input class="form-control" type="text" name="TITULO" id="TITULO"
+                                    <input class="form-control" type="text" required name="TITULO" id="TITULO"
                                         value="<?php echo $titu ?>">
                                 </div>
                                 <div class="col">
                                     <label>Descripcion</label>
-                                    <input class="form-control" type="text" name="DESCRIPCIÓN" id="DESCRIPCIÓN"
+                                    <input class="form-control" type="text" required name="DESCRIPCIÓN" id="DESCRIPCIÓN"
                                         value="<?php echo $descrip ?>">
                                 </div>
                             </div>
@@ -451,17 +453,17 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>Tipo</label>
-                                    <input class="form-control" type="text" name="TIPO" id="TIPO"
+                                    <input class="form-control" type="text" name="TIPO" required id="TIPO"
                                         value="<?php echo $tipo?>">
                                 </div>
                                 <div class="col">
                                     <label>Tipo archivo</label>
-                                    <input class="form-control" type="text" name="TIPO_ARCHIVO" id="TIPO_ARCHIVO"
+                                    <input class="form-control" type="text" name="TIPO_ARCHIVO" required id="TIPO_ARCHIVO"
                                         value="<?php echo $TipoArchivo ?>">
                                 </div>
                                 <div class="col">
                                     <label>Fecha creacion evidencia</label>
-                                    <input class="form-control" type="date" name="FECHA_CREACION_EVIDENCIA"
+                                    <input class="form-control" type="date" required name="FECHA_CREACION_EVIDENCIA"
                                         id="FECHA_CREACION_EVIDENCIA" value="<?php echo $FechaCreacionEvi ?>">
                                 </div>
                             </div>
@@ -469,17 +471,17 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>Fecha registro evidencia</label>
-                                    <input class="form-control" type="date" name="FECHA_REGISTRO_EVIDENCIA"
+                                    <input class="form-control" type="date" required name="FECHA_REGISTRO_EVIDENCIA"
                                         id="FECHA_REGISTRO_EVIDENCIA" value="<?php echo $FechaRegistroEvi ?>">
                                 </div>
                                 <div class="col">
                                     <label>Autores</label>
-                                    <input class="form-control" type="text" name="AUTORES" id="AUTORES"
+                                    <input class="form-control" type="text" required name="AUTORES" id="AUTORES"
                                         value="<?php echo $Autores?>">
                                 </div>
                                 <div class="col">
                                     <label>Observacion</label>
-                                    <input class="form-control" type="text" name="OBSERVACION" id="OBSERVACION"
+                                    <input class="form-control" type="text"  required name="OBSERVACION" id="OBSERVACION"
                                         value="<?php echo $Observacion ?>">
                                 </div>
                             </div>
@@ -487,12 +489,12 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col-md-4">
                                     <label>Lugar geografico</label>
-                                    <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO"
+                                    <input class="form-control" type="text"  required name="ID_LUGAR_GEOGRAFICO"
                                         id="ID_LUGAR_GEOGRAFICO" value="<?php echo $IDLugarGeo ?>">
                                 </div>
                                 <div class="col-md-4">
                                     <label>Estado</label>
-                                    <input class="form-control" type="text" name="ESTADO" id="ESTADO"
+                                    <input class="form-control" type="text" required name="ESTADO" id="ESTADO"
                                         value="<?php echo $Estado ?>">
                                 </div>
                             </div>

@@ -259,12 +259,12 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>ID autor</label>
-                                    <input class="form-control" type="text" name="ID_AUTOR2"
+                                    <input class="form-control" type="text" name="ID_AUTOR2" required
                                         value="<?php echo $id2 ?>">
                                 </div>
                                 <div class="col">
                                     <label>Nombres</label>
-                                    <input class="form-control" type="text" name="NOMBRE2" value="<?php echo $nombre2 ?>">
+                                    <input class="form-control" type="text" name="NOMBRE2" required value="<?php echo $nombre2 ?>">
                                 </div>
 
                             </div>
@@ -272,19 +272,19 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>Apellidos</label>
-                                    <input class="form-control" type="text" name="APELLIDO2"
+                                    <input class="form-control" type="text" name="APELLIDO2" required
                                         value="<?php echo $apellido2 ?>">
                                 </div>
                                 <div class="col">
                                     <label>Nacionalidad</label>
-                                    <input class="form-control" type="text" name="NACIONALIDAD2" value="<?php echo $nacionalidad2?>">
+                                    <input class="form-control" type="text" name="NACIONALIDAD2" required value="<?php echo $nacionalidad2?>">
                                 </div>
                             </div>
 
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label>Fecha nacimiento</label>
-                                    <input class="form-control" type="date" name="FECHA_NACIMIENTO2"
+                                    <input class="form-control" type="date" name="FECHA_NACIMIENTO2" required
                                         value="<?php echo $fechaNacimiento2 ?>">
                                 </div>
                             </div>
@@ -316,12 +316,12 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>ID autor</label>
-                                    <input class="form-control" type="text" name="ID_AUTOR" id="ID_AUTOR" readonly="readonly" 
+                                    <input class="form-control" type="text" required name="ID_AUTOR" id="ID_AUTOR" readonly="readonly" 
                                         value="<?php echo $id ?>">
                                 </div>
                                 <div class="col">
                                     <label>Nombres</label>
-                                    <input class="form-control" type="text" name="NOMBRE" id="NOMBRE"  value="<?php echo $nombre ?>">
+                                    <input class="form-control" type="text" required name="NOMBRE" id="NOMBRE"  value="<?php echo $nombre ?>">
                                 </div>
 
                             </div>
@@ -329,19 +329,19 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>Apellidos</label>
-                                    <input class="form-control" type="text" name="APELLIDO" id="APELLIDO"
+                                    <input class="form-control" type="text" required name="APELLIDO" id="APELLIDO"
                                         value="<?php echo $apellido ?>">
                                 </div>
                                 <div class="col">
                                     <label>Nacionalidad</label>
-                                    <input class="form-control" type="text" name="NACIONALIDAD" id="NACIONALIDAD" value="<?php echo $nacionalidad?>">
+                                    <input class="form-control" type="text" name="NACIONALIDAD" required id="NACIONALIDAD" value="<?php echo $nacionalidad?>">
                                 </div>
                             </div>
 
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label>Fecha nacimiento</label>
-                                    <input class="form-control" type="date" name="FECHA_NACIMIENTO" id="FECHA_NACIMIENTO"
+                                    <input class="form-control" type="date" name="FECHA_NACIMIENTO" required id="FECHA_NACIMIENTO"
                                         value="<?php echo $fechaNacimiento ?>">
                                 </div>
                             </div>
