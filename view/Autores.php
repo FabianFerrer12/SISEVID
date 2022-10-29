@@ -13,11 +13,14 @@ $nombre = "";
 $apellido = "";
 $nacionalidad = "";
 $fechaNacimiento = "";
+
 $id2 = "";
 $nombre2 = "";
 $apellido2 = "";
 $nacionalidad2 = "";
 $fechaNacimiento2 = "";
+
+
 $mat = [];
 $btnListar = "";
 $btn = "";
@@ -39,8 +42,6 @@ if (isset($_POST['NOMBRE2'])) $nombre2 = $_POST['NOMBRE2'];
 if (isset($_POST['APELLIDO2'])) $apellido2 = $_POST['APELLIDO2'];
 if (isset($_POST['NACIONALIDAD2'])) $nacionalidad2 = $_POST['NACIONALIDAD2'];
 if (isset($_POST['FECHA_NACIMIENTO2'])) $fechaNacimiento2 = $_POST['FECHA_NACIMIENTO2'];
-
-
 
 if (isset($_POST['btn'])) $btn = $_POST['btn'];
 if (isset($_POST['btnListar'])) $btnListar = $_POST['btnListar'];
@@ -84,15 +85,13 @@ switch ($btn) {
         $fechaNacimiento="";
     break;
     case 'Guardar':
-        $objAutor = new Autor($id2, $nombre2, $apellido2, $nacionalidad2, $fechaNacimiento2);
-        var_dump($objAutor);
+        $objAutor = new Autor($id, $nombre, $apellido, $nacionalidad, $fechaNacimiento);
         $objAutorController = new AutorController($objAutor);
         $objAutorController->guardarAutor();
         $mat = $objAutorController->listar();
         break;
     case 'Actualizar':
-        $objAutor = new Autor($id, $nombre, $apellido, $nacionalidad, $fechaNacimiento);
-        var_dump($objAutor);
+        $objAutor = new Autor($id2, $nombre2, $apellido2, $nacionalidad2, $fechaNacimiento2);
         $objAutorController = new AutorController($objAutor);
         $objAutorController->actualizar();
         $mat = $objAutorController->listar();
@@ -126,11 +125,11 @@ switch ($btn) {
     function llenarModal_actualizar(datos){
     console.log(datos);
     d=datos.split('||');
-    $("#ID_AUTOR").val(d[0]);
-    $("#NOMBRE").val(d[1]);
-    $("#APELLIDO").val(d[2]);
-    $("#NACIONALIDAD").val(d[3]);
-    $("#FECHA_NACIMIENTO").val(d[4]);
+    $("#ID_AUTOR2").val(d[0]);
+    $("#NOMBRE2").val(d[1]);
+    $("#APELLIDO2").val(d[2]);
+    $("#NACIONALIDAD2").val(d[3]);
+    $("#FECHA_NACIMIENTO2").val(d[4]);
 }
     </script>
 </head>
@@ -168,7 +167,7 @@ switch ($btn) {
             </div>
         </div>
     </nav>
-    <form id="idAutores" action="Autores.php" method="post">
+
         <div class="container">
             <div style="margin:20px;">
                 <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -207,7 +206,7 @@ switch ($btn) {
                 </thead>
 
                 <?php 
-                $mysqli = new mysqli("localhost","root","socrates","SISEVID");
+                $mysqli = new mysqli("localhost","root","","SISEVID");
                 if ($mysqli -> connect_errno) {
                     echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
                     exit();
@@ -255,16 +254,17 @@ switch ($btn) {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                            <form id="idAutores" action="Autores.php" method="post" class="row g-3 needs-validation" validate>
                         <div class="row">
                             <div class="row g-3">
                                 <div class="col">
                                     <label>ID autor</label>
-                                    <input class="form-control" type="text" name="ID_AUTOR2"
-                                        value="<?php echo $id2 ?>">
+                                    <input class="form-control" type="text" name="ID_AUTOR"
+                                        value="<?php echo $id ?>" required>
                                 </div>
                                 <div class="col">
                                     <label>Nombres</label>
-                                    <input class="form-control" type="text" name="NOMBRE2" value="<?php echo $nombre2 ?>">
+                                    <input class="form-control" type="text" name="NOMBRE" value="<?php echo $nombre ?>" required>
                                 </div>
 
                             </div>
@@ -272,20 +272,20 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>Apellidos</label>
-                                    <input class="form-control" type="text" name="APELLIDO2"
-                                        value="<?php echo $apellido2 ?>">
+                                    <input class="form-control" type="text" name="APELLIDO"
+                                        value="<?php echo $apellido ?>" required>
                                 </div>
                                 <div class="col">
                                     <label>Nacionalidad</label>
-                                    <input class="form-control" type="text" name="NACIONALIDAD2" value="<?php echo $nacionalidad2?>">
+                                    <input class="form-control" type="text" name="NACIONALIDAD" value="<?php echo $nacionalidad?>" required>
                                 </div>
                             </div>
 
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label>Fecha nacimiento</label>
-                                    <input class="form-control" type="date" name="FECHA_NACIMIENTO2"
-                                        value="<?php echo $fechaNacimiento2 ?>">
+                                    <input class="form-control" type="date" name="FECHA_NACIMIENTO"
+                                        value="<?php echo $fechaNacimiento ?>" required>
                                 </div>
                             </div>
 
@@ -298,6 +298,7 @@ switch ($btn) {
                                 class="fa-regular fa-floppy-disk"></i> Guardar</button>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
 
@@ -312,16 +313,17 @@ switch ($btn) {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                            <form id="idAutores" action="Autores.php" method="post" class="row g-3 needs-validation" validate>
                         <div class="row">
                             <div class="row g-3">
                                 <div class="col">
                                     <label>ID autor</label>
-                                    <input class="form-control" type="text" name="ID_AUTOR" id="ID_AUTOR" readonly="readonly" 
-                                        value="<?php echo $id ?>">
+                                    <input class="form-control" type="text" name="ID_AUTOR2" id="ID_AUTOR2" readonly ="readonly"
+                                        value="" required>
                                 </div>
                                 <div class="col">
                                     <label>Nombres</label>
-                                    <input class="form-control" type="text" name="NOMBRE" id="NOMBRE"  value="<?php echo $nombre ?>">
+                                    <input class="form-control" type="text" name="NOMBRE2" id="NOMBRE2" value="" required>
                                 </div>
 
                             </div>
@@ -329,20 +331,20 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>Apellidos</label>
-                                    <input class="form-control" type="text" name="APELLIDO" id="APELLIDO"
-                                        value="<?php echo $apellido ?>">
+                                    <input class="form-control" type="text" name="APELLIDO2" id="APELLIDO2"
+                                        value="" required>
                                 </div>
                                 <div class="col">
                                     <label>Nacionalidad</label>
-                                    <input class="form-control" type="text" name="NACIONALIDAD" id="NACIONALIDAD" value="<?php echo $nacionalidad?>">
+                                    <input class="form-control" type="text" name="NACIONALIDAD2" id="NACIONALIDAD2" value="" required>
                                 </div>
                             </div>
 
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label>Fecha nacimiento</label>
-                                    <input class="form-control" type="date" name="FECHA_NACIMIENTO" id="FECHA_NACIMIENTO"
-                                        value="<?php echo $fechaNacimiento ?>">
+                                    <input class="form-control" type="date" name="FECHA_NACIMIENTO2" id="FECHA_NACIMIENTO2"
+                                        value="" required>
                                 </div>
                             </div>
 
@@ -355,9 +357,10 @@ switch ($btn) {
                                 class="fa-regular fa-floppy-disk"></i> Editar</button>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
-    </form>
+    
 
 
 </body>
