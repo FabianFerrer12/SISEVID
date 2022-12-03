@@ -26,7 +26,7 @@
             $DB->abrirBd("localhost","root","","SISEVID", 3306);
             $DB->ejecutarComandoSql($sql);
             $id=$DB->lastInsertId();
-            $sql= "INSERT INTO EVIDENCIA_DETALLE(ID_EVIDENCIA, USUARIO_MODIFICACION,FECHA_MODIFICACION,ESTADO) VALUES ($id,$USUARIO_CREACION,NOW(),)"
+            $sql= "INSERT INTO EVIDENCIA_DETALLE(ID_EVIDENCIA, USUARIO_MODIFICACION,FECHA_MODIFICACION,ESTADO) VALUES ($id,$USUARIO_CREACION,NOW(),)";
             $DB->cerrarBd();
 
             // echo($DB);
