@@ -60,38 +60,48 @@ switch ($bot) {
 
 <body>
     <form id="formularioRegistro" method="post">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #055160 !important;">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">SISEVID</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="./ViewEvidencia.php">Evidencias</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./Autores.php">Autores</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./Register.php">Usuarios</a>
-                    </li>
-                    <li class="nav-item dropdown" style="position: absolute;right: 80px;">
-                        <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user"></i>
-                            <?php echo $_SESSION['USER']; ?>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="./CerrarSession.php">Cerrar session</a></li>
-                        </ul>
-                    </li>
-                </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #055160 !important;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">SISEVID</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="./ViewEvidencia.php">Evidencias
+                                registradas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="./ViewEvidenciaVerificacion.php">Evidencias
+                                verificadas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="./ViewEvidenciaValidacion.php">Evidencias
+                                verificadas y validadas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./Autores.php">Autores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./Register.php">Usuarios</a>
+                        </li>
+
+                        <li class="nav-item dropdown" style="position: absolute;right: 80px;">
+                            <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                                <?php echo $_SESSION['USER']; ?>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="./CerrarSession.php">Cerrar session</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
         <div class="container-fluid p-5 text-dark text-center">
             <h1>Registro de usuario</h1>
         </div>

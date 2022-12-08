@@ -23,7 +23,7 @@
             $ID_LUGAR=$this->objEvidencia->getID_LUGAR();
             $sql="INSERT INTO EVIDENCIA (ID_EVIDENCIA,TITULO,DESCRIPCIÓN,TIPO,TIPO_ARCHIVO,FECHA_CREACION_EVIDENCIA,FECHA_REGISTRO_EVIDENCIA,AUTORES,OBSERVACION,ESTADO,USUARIO_CREACION,FECHA_CREACION) VALUES('$ID_Evidencia','$titu','$des','$tip','$tipoarchivo','$fechaCre','$fechaRegistroEvi','$autores','$Observacion','$Estado','$USUARIO_CREACION',NOW())";
             $DB = new ControlConexion();
-            $DB->abrirBd("localhost","root","","SISEVID", 3306);
+            $DB->abrirBd("localhost","root","socrates","SISEVID", 3306);
             $DB->ejecutarComandoSql($sql);
             $id=$DB->lastInsertId();
             $sql= "INSERT INTO EVIDENCIA_DETALLE(ID_EVIDENCIA, USUARIO_MODIFICACION,FECHA_MODIFICACION,ESTADO) VALUES ($id,$USUARIO_CREACION,NOW(),)";
@@ -38,14 +38,14 @@
 
             $sql="DELETE FROM evidencia WHERE ID_EVIDENCIA='$id_evidencia'";
             $DB = new ControlConexion();
-            $DB->abrirBd("localhost","root","","SISEVID", 3306);
+            $DB->abrirBd("localhost","root","socrates","SISEVID", 3306);
             $DB->ejecutarComandoSql($sql);
             $DB->cerrarBd();
         }
 
         function consultar($id_evidencia){
             // $ID_Evidencia=$this->objEvidencia->getID_EVIDENCIA();
-            $mysqli = new mysqli("localhost","root","","SISEVID");
+            $mysqli = new mysqli("localhost","root","socrates","SISEVID");
 
             if ($mysqli -> connect_errno) {
                 echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
@@ -79,7 +79,7 @@
 
         function buscar($titulo){
             // $ID_Evidencia=$this->objEvidencia->getID_EVIDENCIA();
-            $mysqli = new mysqli("localhost","root","","SISEVID");
+            $mysqli = new mysqli("localhost","root","socrates","SISEVID");
             $mat=[];
             $i=0;
 
@@ -125,7 +125,7 @@
             // $ID_LUGAR=$this->objEvidencia->getID_LUGAR();
 
 
-            $mysqli = new mysqli("localhost","root","","SISEVID");
+            $mysqli = new mysqli("localhost","root","socrates","SISEVID");
 
             if ($mysqli -> connect_errno) {
                 echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
@@ -151,7 +151,7 @@
 
             $sql="SELECT * FROM evidencia";
             $DB = new ControlConexion();
-            $DB->abrirBd("localhost","root","","SISEVID", 3306);
+            $DB->abrirBd("localhost","root","socrates","SISEVID", 3306);
             $recordSet=$DB->ejecutarSelect($sql);
             while($row = $recordSet->fetch_array(MYSQLI_BOTH)){
                 $mat[$i][0]=$row['TITULO'];

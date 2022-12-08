@@ -158,7 +158,7 @@ switch ($btn) {
 <html lang="es">
 
 <head>
-    <title>Datos Evidencia</title>
+    <title>Evidencias registradas</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -167,21 +167,22 @@ switch ($btn) {
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script>
-    function llenarModal_actualizar(datos){
-    console.log(datos);
-    d=datos.split('||');
-    $("#ID_EVIDENCIA2").val(d[0]);
-    $("#TITULO2").val(d[1]);
-    $("#DESCRIPCIÓN2").val(d[2]);
-    $("#TIPO2").val(d[3]);
-    $("#TIPO_ARCHIVO2").val(d[4]);
-    $("#FECHA_CREACION_EVIDENCIA2").val(d[5]);
-    $("#FECHA_REGISTRO_EVIDENCIA2").val(d[6]);
-    $("#AUTORES2").val(d[7]);
-    $("#OBSERVACION2").val(d[8]);
-    $("#ID_LUGAR_GEOGRAFICO2").val(d[9]);
-    $("#ESTADO2").val(d[10]);
-}</script>
+    function llenarModal_actualizar(datos) {
+        console.log(datos);
+        d = datos.split('||');
+        $("#ID_EVIDENCIA2").val(d[0]);
+        $("#TITULO2").val(d[1]);
+        $("#DESCRIPCIÓN2").val(d[2]);
+        $("#TIPO2").val(d[3]);
+        $("#TIPO_ARCHIVO2").val(d[4]);
+        $("#FECHA_CREACION_EVIDENCIA2").val(d[5]);
+        $("#FECHA_REGISTRO_EVIDENCIA2").val(d[6]);
+        $("#AUTORES2").val(d[7]);
+        $("#OBSERVACION2").val(d[8]);
+        $("#ID_LUGAR_GEOGRAFICO2").val(d[9]);
+        $("#ESTADO2").val(d[10]);
+    }
+    </script>
 </head>
 
 <body>
@@ -195,7 +196,16 @@ switch ($btn) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="./ViewEvidencia.php">Evidencias</a>
+                        <a class="nav-link" aria-current="page" href="./ViewEvidencia.php">Evidencias
+                            registradas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="./ViewEvidenciaVerificacion.php">Evidencias
+                            verificadas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="./ViewEvidenciaValidacion.php">Evidencias
+                            verificadas y validadas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./Autores.php">Autores</a>
@@ -203,6 +213,7 @@ switch ($btn) {
                     <li class="nav-item">
                         <a class="nav-link" href="./Register.php">Usuarios</a>
                     </li>
+
                     <li class="nav-item dropdown" style="position: absolute;right: 80px;">
                         <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -217,45 +228,50 @@ switch ($btn) {
             </div>
         </div>
     </nav>
-        <div class="container">
-            <div style="margin:20px;">
-                <div style="display: flex; align-items: center; justify-content: space-between;">
-                    <div class="input-group" style="width: 35%;">
-                        <input class="form-control" type="text" placeholder="Titulo" name="inputBuscar"
-                            value="<?php echo $inputBuscar?>">
-                        <button type="submit" class="btn btn-primary" name="btn" value="Consultar"
-                            style="background: #055160;border-style: hidden"><i
-                                class="fa-solid fa-magnifying-glass"></i></button>
+
+    <div class="container-fluid p-4 text-dark text-center">
+        <h1>Listado de todas las evidencias</h1>
+    </div>
+
+    <div class="container">
+        <div style="margin:20px;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div class="input-group" style="width: 35%;">
+                    <input class="form-control" type="text" placeholder="Titulo" name="inputBuscar"
+                        value="<?php echo $inputBuscar?>">
+                    <button type="submit" class="btn btn-primary" name="btn" value="Consultar"
+                        style="background: #055160;border-style: hidden"><i
+                            class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+                <div style="display: flex;justify-content: space-between; width: 20%;">
+                    <div class="">
+                        <button type="submit" class="btn btn-primary" value="Listar" name="btn"
+                            style="background: #055160"><i class="fas fa-sync"></i></button>
                     </div>
-                    <div style="display: flex;justify-content: space-between; width: 20%;">
-                        <div class="">
-                            <button type="submit" class="btn btn-primary" value="Listar" name="btn"
-                                style="background: #055160"><i class="fas fa-sync"></i></button>
-                        </div>
-                        <div class="">
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                style="background: #055160" data-bs-target="#staticBackdrop" name="btn" value="Nuevo">
-                                <i class="fa-solid fa-plus" style="margin-right: 10px;"></i>Nueva evidencia
-                            </button>
-                        </div>
+                    <div class="">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" style="background: #055160"
+                            data-bs-target="#staticBackdrop" name="btn" value="Nuevo">
+                            <i class="fa-solid fa-plus" style="margin-right: 10px;"></i>Nueva evidencia
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <table class="table table-striped" style="vertical-align: initial;">
-                <thead style="background: #055160;color: white;">
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Titulo</th>
-                        <th scope="col">Descripcion</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Tipo archivo</th>
-                        <th scope="col">Autores</th>
-                        <th scope="col">Acciónes</th>
-                    </tr>
-                </thead>
-                <?php 
-                $mysqli = new mysqli("localhost","root","","SISEVID");
+        <table class="table table-striped" style="vertical-align: initial;">
+            <thead style="background: #055160;color: white;">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Tipo archivo</th>
+                    <th scope="col">Autores</th>
+                    <th scope="col">Acciónes</th>
+                </tr>
+            </thead>
+            <?php 
+                $mysqli = new mysqli("localhost","root","socrates","SISEVID");
                 if ($mysqli -> connect_errno) {
                     echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
                     exit();
@@ -275,38 +291,43 @@ switch ($btn) {
                     $row[9]."||".
                     $row[10];
                 ?>
-                <tbody>
-                    <tr>
-                        <th scope="row"><?php echo $row[0]; ?></th>
-                        <td><?php echo $row[1];  ?></td>
-                        <td><?php echo $row[2]; ?></td>
-                        <td><?php echo $row[3];?></td>
-                        <td><?php echo $row[4];?></td>
-                        <td><?php echo $row[7]; ?></td>
-                        <td>
-                            <div style="display: flex,justify-content: space-between;">
-                                <button class="btn btn-outline-primary" style="border-style: hidden" type="button" data-bs-toggle="modal" onclick="llenarModal_actualizar('<?php echo $datos?>');"  data-bs-target="#editar"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger" style="border-style: hidden" value="<?php echo $row[0]; ?>" name="btnBorrar" type="submit"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php  } ?>
-                </tbody>
-            </table>
-        </div>
+            <tbody>
+                <tr>
+                    <th scope="row"><?php echo $row[0]; ?></th>
+                    <td><?php echo $row[1];  ?></td>
+                    <td><?php echo $row[2]; ?></td>
+                    <td><?php echo $row[3];?></td>
+                    <td><?php echo $row[4];?></td>
+                    <td><?php echo $row[7]; ?></td>
+                    <td>
+                        <div style="display: flex,justify-content: space-between;">
+                            <button class="btn btn-outline-primary" style="border-style: hidden" type="button"
+                                data-bs-toggle="modal" onclick="llenarModal_actualizar('<?php echo $datos?>');"
+                                data-bs-target="#editar"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="btn btn-outline-danger" style="border-style: hidden"
+                                value="<?php echo $row[0]; ?>" name="btnBorrar" type="submit"><i
+                                    class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <?php  } ?>
+            </tbody>
+        </table>
+    </div>
 
-        <!-- Modal nueva evidencia -->
+    <!-- Modal nueva evidencia -->
 
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Evidencia</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="idViewEvidencia" action="ViewEvidencia.php" method="post" class="row g-3 needs-validation" validate>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Evidencia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="idViewEvidencia" action="ViewEvidencia.php" method="post" class="row g-3 needs-validation"
+                        validate>
                         <div class="row">
                             <div class="row g-3">
                                 <div class="col">
@@ -316,7 +337,8 @@ switch ($btn) {
                                 </div>
                                 <div class="col">
                                     <label>Titulo</label>
-                                    <input class="form-control" type="text" name="TITULO" value="<?php echo $titu ?>" required>
+                                    <input class="form-control" type="text" name="TITULO" value="<?php echo $titu ?>"
+                                        required>
                                 </div>
                                 <div class="col">
                                     <label>Descripcion</label>
@@ -328,7 +350,8 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>Tipo</label>
-                                    <input class="form-control" type="text" name="TIPO" value="<?php echo $tipo?>" required>
+                                    <input class="form-control" type="text" name="TIPO" value="<?php echo $tipo?>"
+                                        required>
                                 </div>
                                 <div class="col">
                                     <label>Tipo archivo</label>
@@ -350,8 +373,8 @@ switch ($btn) {
                                 </div>
                                 <div class="col">
                                     <label>Autores</label>
-                                    <input class="form-control" type="text" name="AUTORES"
-                                        value="<?php echo $Autores?>" required>
+                                    <input class="form-control" type="text" name="AUTORES" value="<?php echo $Autores?>"
+                                        required>
                                 </div>
                                 <div class="col">
                                     <label>Observacion</label>
@@ -368,44 +391,47 @@ switch ($btn) {
                                 </div>
                                 <div class="col-md-4">
                                     <label>Estado</label>
-                                    <input class="form-control" type="text" name="ESTADO" value="<?php echo $Estado ?>" required>
+                                    <input class="form-control" type="text" name="ESTADO" value="<?php echo $Estado ?>"
+                                        required>
                                 </div>
                             </div>
 
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        <button class="btn btn-primary" value="Guardar" name="btn" type="submit"><i
-                                class="fa-regular fa-floppy-disk"></i> Guardar</button>
-                    </div>
                 </div>
-                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" value="Guardar" name="btn" type="submit"><i
+                            class="fa-regular fa-floppy-disk"></i> Guardar</button>
+                </div>
             </div>
+            </form>
         </div>
+    </div>
 
-        <!-- Modal editar -->
+    <!-- Modal editar -->
 
-        <div class="modal fade" id="editar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Evidencia</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="idViewEvidencia" action="ViewEvidencia.php" method="post" class="row g-3 needs-validation" validate>
+    <div class="modal fade" id="editar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Evidencia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="idViewEvidencia" action="ViewEvidencia.php" method="post" class="row g-3 needs-validation"
+                        validate>
                         <div class="row">
                             <div class="row g-3">
                                 <div class="col">
                                     <label>ID Evidencia</label>
-                                    <input class="form-control" type="text" name="ID_EVIDENCIA2" id="ID_EVIDENCIA2" readonly ="readonly"
-                                        value="" required>
+                                    <input class="form-control" type="text" name="ID_EVIDENCIA2" id="ID_EVIDENCIA2"
+                                        readonly="readonly" value="" required>
                                 </div>
                                 <div class="col">
                                     <label>Titulo</label>
-                                    <input class="form-control" type="text" name="TITULO2" id="TITULO2" value="" required>
+                                    <input class="form-control" type="text" name="TITULO2" id="TITULO2" value=""
+                                        required>
                                 </div>
                                 <div class="col">
                                     <label>Descripcion</label>
@@ -426,21 +452,21 @@ switch ($btn) {
                                 </div>
                                 <div class="col">
                                     <label>Fecha creacion evidencia</label>
-                                    <input class="form-control" type="date" name="FECHA_CREACION_EVIDENCIA2" id="FECHA_CREACION_EVIDENCIA2"
-                                        value="" required>
+                                    <input class="form-control" type="date" name="FECHA_CREACION_EVIDENCIA2"
+                                        id="FECHA_CREACION_EVIDENCIA2" value="" required>
                                 </div>
                             </div>
 
                             <div class="row g-3">
                                 <div class="col">
                                     <label>Fecha registro evidencia</label>
-                                    <input class="form-control" type="date" name="FECHA_REGISTRO_EVIDENCIA2" id="FECHA_REGISTRO_EVIDENCIA2"
-                                        value="" required>
+                                    <input class="form-control" type="date" name="FECHA_REGISTRO_EVIDENCIA2"
+                                        id="FECHA_REGISTRO_EVIDENCIA2" value="" required>
                                 </div>
                                 <div class="col">
                                     <label>Autores</label>
-                                    <input class="form-control" type="text" name="AUTORES2" id="AUTORES2"
-                                        value="" required>
+                                    <input class="form-control" type="text" name="AUTORES2" id="AUTORES2" value=""
+                                        required>
                                 </div>
                                 <div class="col">
                                     <label>Observacion</label>
@@ -452,26 +478,27 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col-md-4">
                                     <label>Lugar geografico</label>
-                                    <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO2" id="ID_LUGAR_GEOGRAFICO2"
-                                        value="" required>
+                                    <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO2"
+                                        id="ID_LUGAR_GEOGRAFICO2" value="" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label>Estado</label>
-                                    <input class="form-control" type="text" name="ESTADO2" id="ESTADO2" value="" required>
+                                    <input class="form-control" type="text" name="ESTADO2" id="ESTADO2" value=""
+                                        required>
                                 </div>
                             </div>
 
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        <button class="btn btn-primary" value="Editar" name="btn" type="submit"><i
-                                class="fa-regular fa-floppy-disk"></i> Editar</button>
-                    </div>
                 </div>
-                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" value="Editar" name="btn" type="submit"><i
+                            class="fa-regular fa-floppy-disk"></i> Editar</button>
+                </div>
             </div>
+            </form>
         </div>
+    </div>
 </body>
 
 </html>

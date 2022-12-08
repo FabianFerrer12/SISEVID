@@ -22,7 +22,7 @@ class UsuarioController
 
             $sql = "INSERT INTO `sisevid`.`usuario_info_contacto` (`ID_USUARIO_INFO_CONTACTO`,`TIPO_DOCUMENTO`,`NUMERO_DOCUMENTO`,`NOMBRES`,`APELLIDOS`,`NUMERO_CONTACTO`,`EMAIL`,`USUARIO_CREACION`,`FECHA_CREACION`) VALUES ('" . $ID_C_I . "','" . $TIPO_DOCUMENTO . "','" . $NUMERO_DOCUMENTO . "','" . $NOMBRES . "','" . $APELLIDOS . "','" . $NUMERO_CONTACTO . "','" . $EMAIL . "','" . $USUARIO_CREACION . "',CURDATE())";
             $DB = new ControlConexion();
-            $DB->abrirBd("localhost", "root", "", "SISEVID", 3306);
+            $DB->abrirBd("localhost", "root", "socrates", "SISEVID", 3306);
             $DB->ejecutarComandoSql($sql);
 
             $USUARIO_ROL = $user->getUSUARIO_ROL();
@@ -46,7 +46,7 @@ class UsuarioController
     {
         $sql = "SELECT * FROM sisevid.usuario WHERE sisevid.usuario.USUARIO = '" . $user . "' and sisevid.usuario.CONTRASEÑA = '" . $password . "';";
         $DB = new ControlConexion();
-        $DB->abrirBd("localhost", "root", "", "SISEVID", 3306);
+        $DB->abrirBd("localhost", "root", "socrates", "SISEVID", 3306);
         $recordSet = $DB->ejecutarSelect($sql);
         if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
             $DB->cerrarBd();
@@ -60,7 +60,7 @@ class UsuarioController
     {
         $sql = "SELECT `usuario_roles`.`DESCRIPCION` FROM `usuario_roles` INNER JOIN `usuario` ON `usuario_roles`.`ID_USUARIO_ROLES` = `usuario`.`ID_USUARIO_ROLES` WHERE `usuario`.`USUARIO` = '".$user."' AND `usuario`.`CONTRASEÑA` = '".$password."'";
         $DB = new ControlConexion();
-        $DB->abrirBd("localhost", "root", "", "SISEVID", 3306);
+        $DB->abrirBd("localhost", "root", "socrates", "SISEVID", 3306);
         $recordSet = $DB->ejecutarSelect($sql);
         if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
             $DB->cerrarBd();
@@ -77,7 +77,7 @@ class UsuarioController
         $usuarioRol = null;
         $sql = "SELECT * FROM `usuario_roles` WHERE DESCRIPCION IN ('" . $description . "')";
         $DB = new ControlConexion();
-        $DB->abrirBd("localhost", "root", "", "SISEVID", 3306);
+        $DB->abrirBd("localhost", "root", "socrates", "SISEVID", 3306);
         $recordSet = $DB->ejecutarSelect($sql);
         if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
             $usuarioRol = new UsuarioRol($description);
@@ -93,7 +93,7 @@ class UsuarioController
         $usuarioRol = null;
         $sql = "SELECT * FROM `usuario_roles`";
         $DB = new ControlConexion();
-        $DB->abrirBd("localhost", "root", "", "SISEVID", 3306);
+        $DB->abrirBd("localhost", "root", "socrates", "SISEVID", 3306);
         $recordSet = $DB->ejecutarSelect($sql);
         if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
             $usuarioRol = new UsuarioRol($row['DESCRIPCION']);
