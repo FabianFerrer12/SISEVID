@@ -23,9 +23,18 @@ switch ($bot) {
         if ($success) {
             $_SESSION['activeSesion'] = true;
             $_SESSION['rol'] = $UsuarioController->consultarDescipcionRol($_SESSION['USER'],$_SESSION['PASSWORD']);
-            echo "rol".$_SESSION['rol'];
+
+            if($_SESSION['rol']=='Administrador'){
+                header("Location: ./view/ViewEvidencia.php");
+            }else if($_SESSION['rol']=='Verificador'){
+                header("");
+            }else if($_SESSION['rol']=='Validador'){
+                header("");
+            }else{
+                echo '<script language="javascript">alert("No existe pagina para este usuario con el rol asignado");</script>';
+            }
             //header("Location: ./view/ViewEvidencia.php");
-            header("Location: ./view/ViewEvidencia.php");
+
         } else echo '<script language="javascript">alert("Usuario o contraseña incorrecta");</script>';
         break;
     case 'Soporte':
