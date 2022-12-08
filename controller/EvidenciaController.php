@@ -21,12 +21,13 @@
             $USUARIO_CREACION=$_SESSION['USER'];
             // $FechaCreacion=$this->objEvidencia->getFECHA_CREACION();
             $ID_LUGAR=$this->objEvidencia->getID_LUGAR();
-            $sql="INSERT INTO EVIDENCIA (ID_EVIDENCIA,TITULO,DESCRIPCIÓN,TIPO,TIPO_ARCHIVO,FECHA_CREACION_EVIDENCIA,FECHA_REGISTRO_EVIDENCIA,AUTORES,OBSERVACION,ESTADO,USUARIO_CREACION,FECHA_CREACION) VALUES('$ID_Evidencia','$titu','$des','$tip','$tipoarchivo','$fechaCre','$fechaRegistroEvi','$autores','$Observacion','$Estado','$USUARIO_CREACION',NOW())";
+            $sql="INSERT INTO EVIDENCIA (ID_EVIDENCIA,TITULO,DESCRIPCIÓN,TIPO,TIPO_ARCHIVO,FECHA_CREACION_EVIDENCIA,FECHA_REGISTRO_EVIDENCIA,AUTORES,OBSERVACION,ESTADO,USUARIO_CREACION,FECHA_CREACION) VALUES('$ID_Evidencia','$titu','$des','$tip','$tipoarchivo','$fechaCre','$fechaRegistroEvi','$autores','$Observacion','1','$USUARIO_CREACION',NOW())";
             $DB = new ControlConexion();
             $DB->abrirBd("localhost","root","","SISEVID", 3306);
             $DB->ejecutarComandoSql($sql);
             $id=$DB->lastInsertId();
-            $sql= "INSERT INTO EVIDENCIA_DETALLE(ID_EVIDENCIA, USUARIO_MODIFICACION,FECHA_MODIFICACION,ESTADO) VALUES ($id,$USUARIO_CREACION,NOW(),)";
+            $sql1= "INSERT INTO EVIDENCIA_DETALLE(ID_EVIDENCIA, USUARIO_MODIFICACION,FECHA_MODIFICACION,ESTADO) VALUES ($id,$USUARIO_CREACION,NOW(),'1')";
+            $DB->ejecutarComandoSql($sql1);
             $DB->cerrarBd();
 
             // echo($DB);

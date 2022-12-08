@@ -44,7 +44,7 @@ class UsuarioController
 
     function consultarUsuario(string $user, string $password)
     {
-        $sql = "SELECT * FROM sisevid.usuario WHERE sisevid.usuario.USUARIO = '" . $user . "' and sisevid.usuario.CONTRASEÑA = '" . $password . "';";
+        $sql = "SELECT * FROM usuario WHERE USUARIO = '" . $user . "' and CONTRASEÑA = '" . $password . "';";
         $DB = new ControlConexion();
         $DB->abrirBd("localhost", "root", "", "SISEVID", 3306);
         $recordSet = $DB->ejecutarSelect($sql);
@@ -56,9 +56,10 @@ class UsuarioController
         return false;
     }
 
+
     function consultarDescipcionRol(string $user,string $password)
     {
-        $sql = "SELECT `usuario_roles`.`DESCRIPCION` FROM `usuario_roles` INNER JOIN `usuario` ON `usuario_roles`.`ID_USUARIO_ROLES` = `usuario`.`ID_USUARIO_ROLES` WHERE `usuario`.`USUARIO` = '".$user."' AND `usuario`.`CONTRASEÑA` = '".$password."'";
+        $sql = "SELECT `usuario_roles`.`DESCRIPCION` FROM `usuario_roles` INNER JOIN `usuario` ON `usuario_roles`.`ID_USUARIO_ROLES` = `usuario`.`ID_USUARIO_ROLES` WHERE `usuario`.`USUARIO` = '".$user."' AND `usuario`.`CONTRASEÑA` = '$password'";
         $DB = new ControlConexion();
         $DB->abrirBd("localhost", "root", "", "SISEVID", 3306);
         $recordSet = $DB->ejecutarSelect($sql);
