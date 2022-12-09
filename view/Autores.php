@@ -144,7 +144,7 @@ switch ($btn) {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <?php if ($algo == "Administrador"){ ?>
+                    <?php if ($_SESSION['rol'] == "Administrador"){ ?>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="./ViewEvidencia.php">Evidencias
                             registradas </a>

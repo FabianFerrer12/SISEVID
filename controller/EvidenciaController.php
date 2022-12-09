@@ -160,7 +160,6 @@
                 $mat[$i][5]=$row['FECHA_REGISTRO_EVIDENCIA'];
                 $mat[$i][6]=$row['AUTORES'];
                 $mat[$i][7]=$row['OBSERVACION'];
-                $mat[$i][8]=$row['ESTADO'];
                 $mat[$i][9]=$row['ID_EVIDENCIA'];
                 $i++;
             }
