@@ -22,8 +22,13 @@
             $DB = new ControlConexion();
             $DB->abrirBd("localhost","root","","SISEVID", 3306);
             $DB->ejecutarComandoSql($sql);
-            $id=$DB->lastInsertId();
-            $sql1= "INSERT INTO EVIDENCIA_DETALLE(ID_EVIDENCIA, USUARIO_MODIFICACION,FECHA_MODIFICACION,ESTADO) VALUES ($id,$USUARIO_CREACION,NOW(),'1')";
+            $DB->cerrarBd();
+
+            $id=$ID_Evidencia;
+            $DB->abrirBd("localhost","root","","SISEVID", 3306);
+            $sqlUpdate= "UPDATE evidencia_detalle SET ACTIVO = 'N' WHERE ID_EVIDENCIA = '$ID_Evidencia'";
+            $DB->ejecutarComandoSql($sqlUpdate);
+            $sql1= "INSERT INTO evidencia_detalle (ID_EVIDENCIA, USUARIO_MODIFICACION,FECHA_MODIFICACION,ESTADO,ACTIVO) VALUES ('$ID_Evidencia','$USUARIO_CREACION',NOW(),'1','S')";
             $DB->ejecutarComandoSql($sql1);
             $DB->cerrarBd();
 

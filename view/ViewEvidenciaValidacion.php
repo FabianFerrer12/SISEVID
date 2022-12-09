@@ -1,12 +1,19 @@
 <?php
 include '../model/Evidencia.php';
 include '../controller/DB.php';
-include '../controller/EvidenciaController.php';
+include '../controller/ValidadorController.php';
 
 session_start();
 
 if (!$_SESSION['activeSesion']) header("Location: ../index.php");
+$Verificar='';
+if (isset($_POST['Verificar'])) $Verificar = $_POST['Verificar'];
 
+
+if($Verificar){
+    $controlador=new ValidadorController();
+    $controlador->Validador($Verificar);
+}
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +98,7 @@ if (!$_SESSION['activeSesion']) header("Location: ../index.php");
                         <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i>
-                            <?php echo $_SESSION['rol']; ?>
+                            <?php echo $_SESSION['USER']; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="./CerrarSession.php">Cerrar session</a></li>
@@ -125,7 +132,7 @@ if (!$_SESSION['activeSesion']) header("Location: ../index.php");
                     echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
                     exit();
                 }
-                $sql = "SELECT * FROM evidencia";
+                $sql = "SELECT * FROM evidencia e INNER JOIN evidencia_detalle ed ON ed.ID_EVIDENCIA=e.ID_EVIDENCIA WHERE ed.ESTADO='2' AND ed.ACTIVO='S'";
                 $resultado=$mysqli->query($sql);
                 while($row = $resultado->fetch_array()){
                     $datos=$row[0]."||".
@@ -149,12 +156,12 @@ if (!$_SESSION['activeSesion']) header("Location: ../index.php");
                     <td><?php echo $row[4];?></td>
                     <td><?php echo $row[7]; ?></td>
                     <td>
-                        <div style="display: flex,justify-content: space-between;">
-                            <button class="btn btn-outline-primary" style="border-style: hidden" type="button"
-                                data-bs-toggle="modal" onclick="llenarModal_actualizar('<?php echo $datos?>');"
-                                data-bs-target="#editar"><i class="fas fa-check-double"></i> Validar</button>
+                        <form action="ViewEvidenciaValidacion.php" method="POST">
+                            <div style="display: flex,justify-content: space-between;">
+                                <button class="btn btn-outline-primary" style="border-style: hidden" type="submit" VALUE="<?php echo $row[0] ?>" name="Verificar" > <i class="fas fa-check-double"></i> Validar</button>
 
-                        </div>
+                            </div>
+                        </form>
                     </td>
                 </tr>
                 <?php  } ?>

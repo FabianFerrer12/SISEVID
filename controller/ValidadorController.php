@@ -1,19 +1,15 @@
 <?php
     class ValidadorController{
-        var $objEvidencia;
 
-        function __construct($objEvidencia){
-            $this->objEvidencia = $objEvidencia;
-            // var_dump($objEvidencia);
-        }
-
-        function Validador()
+        function Validador($ID)
         {
-            $UsuarioCreacion=$_SESSION['USER'];
-            $ID_Evidencia=$this->objEvidencia->getID_EVIDENCIA();
-            $sql="INSERT INTO evidencia_detalle (ID_EVIDENCIA,USUARIO_MODIFICACION,FECHA_MODIFICACION,ESTADO) VALUES ('$ID_Evidencia','$UsuarioCreacion',NOW(),'3')";
             $DB = new ControlConexion();
+            $UsuarioCreacion=$_SESSION['USER'];
             $DB->abrirBd("localhost","root","","SISEVID", 3306);
-            $DB->ejecutarComandoSql($sql);
+            $sqlUpdate= "UPDATE evidencia_detalle SET ACTIVO = 'N' WHERE ID_EVIDENCIA = '$ID'";
+            $DB->ejecutarComandoSql($sqlUpdate);
+            $sql1= "INSERT INTO evidencia_detalle (ID_EVIDENCIA, USUARIO_MODIFICACION,FECHA_MODIFICACION,ESTADO,ACTIVO) VALUES ('$ID','$UsuarioCreacion',NOW(),'3','S')";
+            $DB->ejecutarComandoSql($sql1);
+            $DB->cerrarBd();
         }
     }

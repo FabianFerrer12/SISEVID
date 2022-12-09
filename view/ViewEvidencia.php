@@ -238,7 +238,7 @@ switch ($btn) {
                         <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i>
-                            <?php echo $_SESSION['rol']; ?>
+                            <?php echo $_SESSION['USER']; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="./CerrarSession.php">Cerrar session</a></li>
@@ -287,7 +287,9 @@ switch ($btn) {
                     <th scope="col">Tipo</th>
                     <th scope="col">Tipo archivo</th>
                     <th scope="col">Autores</th>
+                    <th scope="col">Estado</th>
                     <th scope="col">Acciónes</th>
+
                 </tr>
             </thead>
             <?php 
@@ -296,7 +298,7 @@ switch ($btn) {
                     echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
                     exit();
                 }
-                $sql = "SELECT * FROM evidencia";
+            $sql = "SELECT  e.*,ed.ESTADO FROM evidencia e INNER JOIN evidencia_detalle ed ON ed.ID_EVIDENCIA=e.ID_EVIDENCIA WHERE ed.ACTIVO='S'";
                 $resultado=$mysqli->query($sql);
                 while($row = $resultado->fetch_array()){
                     $datos=$row[0]."||".
@@ -319,6 +321,7 @@ switch ($btn) {
                     <td><?php echo $row[3];?></td>
                     <td><?php echo $row[4];?></td>
                     <td><?php echo $row[7]; ?></td>
+                    <td><?php echo $row[13]; ?></td>
                     <td>
                         <div style="display: flex,justify-content: space-between;">
                             <button class="btn btn-outline-primary" style="border-style: hidden" type="button"
@@ -409,11 +412,7 @@ switch ($btn) {
                                     <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO"
                                         value="<?php echo $IDLugarGeo ?>" required>
                                 </div>
-                                <div class="col-md-4">
-                                    <label>Estado</label>
-                                    <input class="form-control" type="text" name="ESTADO" value="<?php echo $Estado ?>"
-                                        required>
-                                </div>
+
                             </div>
 
                         </div>
@@ -501,11 +500,7 @@ switch ($btn) {
                                     <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO2"
                                         id="ID_LUGAR_GEOGRAFICO2" value="" required>
                                 </div>
-                                <div class="col-md-4">
-                                    <label>Estado</label>
-                                    <input class="form-control" type="text" name="ESTADO2" id="ESTADO2" value=""
-                                        required>
-                                </div>
+
                             </div>
 
                         </div>
