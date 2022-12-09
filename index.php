@@ -27,9 +27,9 @@ switch ($bot) {
             if($_SESSION['rol']=='Administrador'){
                 header("Location: ./view/ViewEvidencia.php");
             }else if($_SESSION['rol']=='Verificador'){
-                header("Location: ./view/ViewEvidenciaVerificacion.php");
+                header("");
             }else if($_SESSION['rol']=='Validador'){
-                header("Location: ./view/ViewEvidenciaValidacion.php");
+                header("");
             }else{
                 echo '<script language="javascript">alert("No existe pagina para este usuario con el rol asignado");</script>';
             }

@@ -120,7 +120,7 @@ if (!$_SESSION['activeSesion']) header("Location: ../index.php");
                 </tr>
             </thead>
             <?php 
-                $mysqli = new mysqli("localhost","root","socrates","SISEVID");
+                $mysqli = new mysqli("localhost","root","","SISEVID");
                 if ($mysqli -> connect_errno) {
                     echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
                     exit();
