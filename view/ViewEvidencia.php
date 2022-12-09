@@ -7,6 +7,8 @@ session_start();
 
 if (!$_SESSION['activeSesion']) header("Location: ../index.php");
 
+$algo = $_SESSION['rol'] ;
+
 $idEvi = "";
 $titu = "";
 $descrip = "";
@@ -195,10 +197,12 @@ switch ($btn) {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+                    <?php if ($algo == "Administrador"){ ?>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="./ViewEvidencia.php">Evidencias
-                            registradas</a>
+                            registradas </a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="./ViewEvidenciaVerificacion.php">Evidencias
                             verificadas</a>
@@ -213,12 +217,28 @@ switch ($btn) {
                     <li class="nav-item">
                         <a class="nav-link" href="./Register.php">Usuarios</a>
                     </li>
+                    <?php }?>
+
+
+                    <?php if ( $_SESSION['rol'] == "Verificador"){ ?>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="./ViewEvidenciaVerificacion.php">Evidencias
+                            verificadas</a>
+                    </li>
+                    <?php }?>
+
+                    <?php if ( $_SESSION['rol'] == "Validador"){ ?>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="./ViewEvidenciaValidacion.php">Evidencias
+                            verificadas y validadas</a>
+                    </li>
+                    <?php }?>
 
                     <li class="nav-item dropdown" style="position: absolute;right: 80px;">
                         <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i>
-                            <?php echo $_SESSION['USER']; ?>
+                            <?php echo $_SESSION['rol']; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="./CerrarSession.php">Cerrar session</a></li>
