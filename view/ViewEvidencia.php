@@ -320,7 +320,7 @@ switch ($btn) {
                     <td><?php echo $row[3];?></td>
                     <td><?php echo $row[4];?></td>
                     <td><?php echo $row[7]; ?></td>
-                    <td><?php echo $row[12]; ?></td>
+                    <td><?php echo $row[11]; ?></td>
                     <td>
                         <div style="display: flex,justify-content: space-between;">
                             <button class="btn btn-outline-primary" style="border-style: hidden" type="button"
@@ -405,14 +405,6 @@ switch ($btn) {
                                 </div>
                             </div>
 
-                            <div class="row g-3">
-                                <div class="col-md-4">
-                                    <label>Lugar geografico</label>
-                                    <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO"
-                                        value="<?php echo $IDLugarGeo ?>" required>
-                                </div>
-
-                            </div>
 
                         </div>
                 </div>
@@ -493,14 +485,6 @@ switch ($btn) {
                                 </div>
                             </div>
 
-                            <div class="row g-3">
-                                <div class="col-md-4">
-                                    <label>Lugar geografico</label>
-                                    <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO2"
-                                        id="ID_LUGAR_GEOGRAFICO2" value="" required>
-                                </div>
-
-                            </div>
 
                         </div>
                 </div>
