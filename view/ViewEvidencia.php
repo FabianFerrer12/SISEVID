@@ -17,13 +17,13 @@ if (isset($_SESSION['roles'])){
         if($rol == 'Administrador'){
             $administrador = true;
         }else if($rol =='Verificador'){
-            $validate = true;
-        }else if ($rol=='Validador'){
             $verificate = true;
+        }else if ($rol=='Validador'){
+            $validate = true;
         }else if($rol=='Administrativo'){
             $administrativo = true;
         }
-    }  
+    }
 }
 
 $algo = $_SESSION['rol'] ;
@@ -320,7 +320,7 @@ switch ($btn) {
                     <td><?php echo $row[3];?></td>
                     <td><?php echo $row[4];?></td>
                     <td><?php echo $row[7]; ?></td>
-                    <td><?php echo $row[13]; ?></td>
+                    <td><?php echo $row[12]; ?></td>
                     <td>
                         <div style="display: flex,justify-content: space-between;">
                             <button class="btn btn-outline-primary" style="border-style: hidden" type="button"

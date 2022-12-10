@@ -72,7 +72,7 @@ class UsuarioController
         $result2 = [];
         $i = 0;
 
-        while($row = $recordSet->fetch_array()){
+        while($row = $recordSet->fetch_array(MYSQLI_BOTH)){
             $result2[$i]= $row['DESCRIPCION'];
             $i++;
         }

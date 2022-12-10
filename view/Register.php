@@ -30,9 +30,9 @@ if (isset($_SESSION['roles'])){
         if($rol == 'Administrador'){
             $administrador = true;
         }else if($rol =='Verificador'){
-            $validate = true;
-        }else if ($rol=='Validador'){
             $verificate = true;
+        }else if ($rol=='Validador'){
+            $validate = true;
         }else if($rol=='Administrativo'){
             $administrativo = true;
         }

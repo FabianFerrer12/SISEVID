@@ -34,6 +34,8 @@ switch ($bot) {
                     $_SESSION['rol'] = $rol;
                 }else if ($rol=='Validador'){
                     $_SESSION['rol'] = $rol;
+                }else if($rol=='Administrativo'){
+                    $_SESSION['rol'] = $rol;
                 }
             }
 
@@ -43,7 +45,7 @@ switch ($bot) {
                 header("Location: ./view/ViewEvidenciaVerificacion.php");
             }else if($_SESSION['rol']=='Validador'){
                 header("Location: ./view/ViewEvidenciaValidacion.php");
-            }else{
+            }else if($_SESSION['rol']=='Administrativo'){
                 echo '<script language="javascript">alert("No existe pagina para este usuario con el rol asignado");</script>';
             }
 
