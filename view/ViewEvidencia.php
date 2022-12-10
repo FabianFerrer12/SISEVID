@@ -320,7 +320,12 @@ switch ($btn) {
                     <td><?php echo $row[3];?></td>
                     <td><?php echo $row[4];?></td>
                     <td><?php echo $row[7]; ?></td>
-                    <td><?php echo $row[11]; ?></td>
+                    <td> <?php if ($row[11]==1){
+                        echo 'No verificada';
+                        }else if( $row[11]==2) {
+                        echo 'Verificada';
+                        }else if( $row[11]==3){
+                        echo 'Verificada y validada';} ?> </td>
                     <td>
                         <div style="display: flex,justify-content: space-between;">
                             <button class="btn btn-outline-primary" style="border-style: hidden" type="button"
