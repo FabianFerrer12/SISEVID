@@ -22,7 +22,20 @@ switch ($bot) {
         $success = $UsuarioController->consultarUsuario($_SESSION['USER'],$_SESSION['PASSWORD']);;
         if ($success) {
             $_SESSION['activeSesion'] = true;
-            $_SESSION['rol'] = $UsuarioController->consultarDescipcionRol($_SESSION['USER'],$_SESSION['PASSWORD']);
+            $_SESSION['roles'] = $UsuarioController->consultarDescipcionRol($_SESSION['USER'],$_SESSION['PASSWORD']);
+            foreach ($_SESSION['roles'] as $rol){
+                if($rol == null){
+                    $_SESSION['rol'] = null;
+                    break;
+                }else if($rol == 'Administrador'){
+                    $_SESSION['rol'] = $rol;
+                    break;
+                }else if($rol =='Verificador'){
+                    $_SESSION['rol'] = $rol;
+                }else if ($rol=='Validador'){
+                    $_SESSION['rol'] = $rol;
+                }
+            }
 
             if($_SESSION['rol']=='Administrador'){
                 header("Location: ./view/ViewEvidencia.php");
@@ -33,7 +46,6 @@ switch ($bot) {
             }else{
                 echo '<script language="javascript">alert("No existe pagina para este usuario con el rol asignado");</script>';
             }
-            //header("Location: ./view/ViewEvidencia.php");
 
         } else echo '<script language="javascript">alert("Usuario o contraseña incorrecta");</script>';
         break;
@@ -66,33 +78,6 @@ switch ($bot) {
   display: flex;
   flex-direction: column;background-image: linear-gradient(to top, #09203f 0%, #055160 100%);">
     <form id="idLogin" method="post">
-        <!-- <div class="container-fluid p-5 text-white text-center" style="background: #055160;">
-            <h1>Login</h1>
-        </div>
-        <div class="container ">
-            <div class="row">
-                <div class="row g-3 justify-content-center">
-                    <div class="col-sm-3 ">
-                        <label>Usuario</label>
-                        <input class="form-control" type="text" name="USER" value="">
-                    </div>
-                </div>
-                <div class="row g-3 justify-content-center">
-                    <div class="col-sm-3 ">
-                        <label>Contraseña</label>
-                        <input class="form-control" type="password" name="PASSWORD" value="">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <input type="submit" class="btn btn-primary" value="Login" name="btn" />
-                </div>
-            </div>
-        </div> -->
-
-
-
         <div id="container"
             style="height: 100%; width: 100%; background-size: cover; display: flex; justify-content: center; align-items: center;">
             <div id="login" style="background: rgb(0 0 0 / 21%);  height: 330px; width: 35%;margin-top: 10%;">

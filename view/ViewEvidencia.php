@@ -7,6 +7,25 @@ session_start();
 
 if (!$_SESSION['activeSesion']) header("Location: ../index.php");
 
+$administrador = false;
+$validate = false;
+$verificate = false;
+$administrativo = false;
+
+if (isset($_SESSION['roles'])){
+    foreach ($_SESSION['roles'] as $rol){
+        if($rol == 'Administrador'){
+            $administrador = true;
+        }else if($rol =='Verificador'){
+            $validate = true;
+        }else if ($rol=='Validador'){
+            $verificate = true;
+        }else if($rol=='Administrativo'){
+            $administrativo = true;
+        }
+    }  
+}
+
 $algo = $_SESSION['rol'] ;
 
 $idEvi = "";
@@ -70,14 +89,8 @@ if (isset($_POST['FECHA_CREACION_EVIDENCIA2'])) $FechaCreacionEvi2 = $_POST['FEC
 if (isset($_POST['FECHA_REGISTRO_EVIDENCIA2'])) $FechaRegistroEvi2 = $_POST['FECHA_REGISTRO_EVIDENCIA2'];
 if (isset($_POST['AUTORES2'])) $Autores2 = $_POST['AUTORES2'];
 if (isset($_POST['OBSERVACION2'])) $Observacion2 = $_POST['OBSERVACION2'];
-// if (isset($_POST['ID_LUGAR_GEOGRAFICO'])) $IDLugarGeo = $_POST['ID_LUGAR_GEOGRAFICO'];
 if (isset($_POST['ESTADO2'])) $Estado2 = $_POST['ESTADO2'];
 
-// function borrar2($id_evidencia){
-//     $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-//     $objEvidenciaController = new EvidenciaController();
-//     $objEvidenciaController->borrar($id_evidencia);
-// }
 
 
 if (isset($_POST['btn'])) $btn = $_POST['btn'];
@@ -86,19 +99,13 @@ if (isset($_POST['btnBorrar'])) $btnEliminar = $_POST['btnBorrar'];
 if (isset($_POST['btnEditar'])) $btnEditar = $_POST['btnEditar'];
 if (isset($_POST['btnGuardar'])) $btnGuardar = $_POST['btnGuardar'];
 if (isset($_POST['btnNuevo'])) $btnNuevo = $_POST['btnNuevo'];
-
+        
 
 if($btnEliminar){
     $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
     $objEvidenciaController = new EvidenciaController($objEvidencia);
     $objEvidenciaController->borrar($btnEliminar);
 }
-
-// if($btnGuardar){
-//     $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-//     $objEvidenciaController = new EvidenciaController($objEvidencia);
-//     $objEvidenciaController->guardarEvidencia();
-// }
 
 if($btnNuevo){
     $titu="";
@@ -197,41 +204,33 @@ switch ($btn) {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <?php if ($algo == "Administrador"){ ?>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="./ViewEvidencia.php">Evidencias
-                            registradas </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="./ViewEvidenciaVerificacion.php">Evidencias
-                            verificadas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="./ViewEvidenciaValidacion.php">Evidencias
-                            verificadas y validadas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./Autores.php">Autores</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./Register.php">Usuarios</a>
-                    </li>
+                    <?php if ($administrador){ ?>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="./ViewEvidencia.php">Evidencias
+                                registradas </a>
+                        </li>
                     <?php }?>
-
-
-                    <?php if ( $_SESSION['rol'] == "Verificador"){ ?>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="./ViewEvidenciaVerificacion.php">Evidencias
-                            verificadas</a>
-                    </li>
+                    <?php if ($administrador || $verificate){ ?>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="./ViewEvidenciaVerificacion.php">Evidencias
+                                verificadas</a>
+                        </li>
                     <?php }?>
-
-                    <?php if ( $_SESSION['rol'] == "Validador"){ ?>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="./ViewEvidenciaValidacion.php">Evidencias
-                            verificadas y validadas</a>
-                    </li>
+                    <?php if ($administrador || $validate){ ?>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="./ViewEvidenciaValidacion.php">Evidencias
+                                verificadas y validadas</a>
+                        </li>
+                    <?php }?>
+                    <?php if ($administrador ){ ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./Autores.php">Autores</a>
+                        </li>
+                    <?php }?>
+                    <?php if ($administrador){ ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./Register.php">Usuarios</a>
+                        </li>
                     <?php }?>
 
                     <li class="nav-item dropdown" style="position: absolute;right: 80px;">

@@ -1,4 +1,7 @@
 <?php
+
+use JetBrains\PhpStorm\ArrayShape;
+
 include_once 'DB.php';
 class UsuarioController
 {
@@ -31,9 +34,11 @@ class UsuarioController
             $usuarioRol = $usuarioController->consultarRolEspecifico($description);
             $usuarioRolId = $usuarioRol->getID();
             
-            $sql = "INSERT INTO `sisevid`.`usuario` (`ID_USUARIO`,`ID_USUARIO_INFO_CONTACTO`,`ID_USUARIO_ROLES`,`USUARIO`,`CONTRASEÑA`,`USUARIO_CREACION`,`FECHA_CREACION`) VALUES ('" . $ID_USER . "','" . $ID_C_I . "','" . $usuarioRolId . "','" . $USER . "','" . $PASSWORD . "','" . $USUARIO_CREACION . "',NOW());";
+            $sql = "INSERT INTO `sisevid`.`usuario` (`ID_USUARIO`,`ID_USUARIO_INFO_CONTACTO`,`USUARIO`,`CONTRASEÑA`,`USUARIO_CREACION`,`FECHA_CREACION`) VALUES ('" . $ID_USER . "','" . $ID_C_I . "','" . $USER . "','" . $PASSWORD . "','" . $USUARIO_CREACION . "',NOW());";
+            $sqlRol = "INSERT INTO USUARIO_ROLES_INTERMEDIA(ID_USUARIO, ID_USUARIO_ROLES) VALUES ('" . $ID_USER . "','" . $usuarioRolId . "');";
 
             $DB->ejecutarComandoSql($sql);
+            $DB->ejecutarComandoSql($sqlRol);
             $DB->cerrarBd();
             echo '<script language="javascript">alert("Se registro correctamente el usuario");</script>';
         } catch (Exception $e) {
@@ -59,16 +64,21 @@ class UsuarioController
 
     function consultarDescipcionRol(string $user,string $password)
     {
-        $sql = "SELECT `usuario_roles`.`DESCRIPCION` FROM `usuario_roles` INNER JOIN `usuario` ON `usuario_roles`.`ID_USUARIO_ROLES` = `usuario`.`ID_USUARIO_ROLES` WHERE `usuario`.`USUARIO` = '".$user."' AND `usuario`.`CONTRASEÑA` = '$password'";
+        $sql = "SELECT UR.DESCRIPCION FROM USUARIO US INNER JOIN USUARIO_ROLES_INTERMEDIA URI ON US.ID_USUARIO = URI.ID_USUARIO INNER JOIN USUARIO_ROLES UR  ON URI.ID_USUARIO_ROLES = UR.ID_USUARIO_ROLES WHERE US.USUARIO = '$user' AND US.CONTRASEÑA = '$password'";
+        
         $DB = new ControlConexion();
         $DB->abrirBd("localhost", "root", "", "SISEVID", 3306);
         $recordSet = $DB->ejecutarSelect($sql);
-        if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
-            $DB->cerrarBd();
-            return $row['DESCRIPCION'];
+        $result2 = [];
+        $i = 0;
+
+        while($row = $recordSet->fetch_array()){
+            $result2[$i]= $row['DESCRIPCION'];
+            $i++;
         }
+        
         $DB->cerrarBd();
-        return null;
+        return $result2;
     }
     
 
@@ -91,16 +101,20 @@ class UsuarioController
     //AJustar para que se almacene en la lista y lo retorne
     function consultarRoles()
     {
-        $usuarioRol = null;
         $sql = "SELECT * FROM `usuario_roles`";
         $DB = new ControlConexion();
         $DB->abrirBd("localhost", "root", "", "SISEVID", 3306);
         $recordSet = $DB->ejecutarSelect($sql);
-        if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
-            $usuarioRol = new UsuarioRol($row['DESCRIPCION']);
-            $usuarioRol->setID($row['ID']);
+
+        $result = [];
+        $i = 0;
+
+        while($row = $recordSet->fetch_array()){
+            $result[$i]= $row['DESCRIPCION'];
+            $i++;
         }
+        
         $DB->cerrarBd();
-        return $usuarioRol;
+        return $result;
     }
 }

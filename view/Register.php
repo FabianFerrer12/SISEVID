@@ -20,6 +20,25 @@ if (isset($_POST['N_DOC'])) $N_DOC = $_POST['N_DOC'];
 if (isset($_POST['ROL'])) $ROL = $_POST['ROL'];
 if (isset($_POST['btn'])) $bot = $_POST['btn'];
 
+$administrador = false;
+$validate = false;
+$verificate = false;
+$administrativo = false;
+
+if (isset($_SESSION['roles'])){
+    foreach ($_SESSION['roles'] as $rol){
+        if($rol == 'Administrador'){
+            $administrador = true;
+        }else if($rol =='Verificador'){
+            $validate = true;
+        }else if ($rol=='Validador'){
+            $verificate = true;
+        }else if($rol=='Administrativo'){
+            $administrativo = true;
+        }
+    }  
+}
+
 
 switch ($bot) {
     case 'Borrar':
@@ -69,41 +88,33 @@ switch ($bot) {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <?php if ($_SESSION['rol'] == "Administrador"){ ?>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="./ViewEvidencia.php">Evidencias
-                            registradas </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="./ViewEvidenciaVerificacion.php">Evidencias
-                            verificadas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="./ViewEvidenciaValidacion.php">Evidencias
-                            verificadas y validadas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./Autores.php">Autores</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./Register.php">Usuarios</a>
-                    </li>
+                <?php if ($administrador){ ?>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="./ViewEvidencia.php">Evidencias
+                                registradas </a>
+                        </li>
                     <?php }?>
-
-
-                    <?php if ( $_SESSION['rol'] == "Verificador"){ ?>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="./ViewEvidenciaVerificacion.php">Evidencias
-                            verificadas</a>
-                    </li>
+                    <?php if ($administrador || $verificate){ ?>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="./ViewEvidenciaVerificacion.php">Evidencias
+                                verificadas</a>
+                        </li>
                     <?php }?>
-
-                    <?php if ( $_SESSION['rol'] == "Validador"){ ?>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="./ViewEvidenciaValidacion.php">Evidencias
-                            verificadas y validadas</a>
-                    </li>
+                    <?php if ($administrador || $validate){ ?>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="./ViewEvidenciaValidacion.php">Evidencias
+                                verificadas y validadas</a>
+                        </li>
+                    <?php }?>
+                    <?php if ($administrador ){ ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./Autores.php">Autores</a>
+                        </li>
+                    <?php }?>
+                    <?php if ($administrador){ ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./Register.php">Usuarios</a>
+                        </li>
                     <?php }?>
 
                     <li class="nav-item dropdown" style="position: absolute;right: 80px;">
@@ -165,7 +176,15 @@ switch ($bot) {
                     </div>
                     <div class="col">
                         <label>ROL</label>
-                        <input class="form-control" type="text" name="ROL" value="">
+                        <select name="ROL" class="form-select" aria-label="Default select example">
+                            <?php 
+                                $UsuarioController = new UsuarioController();
+                                $roles = $UsuarioController->consultarRoles();
+                                foreach($roles as $rol){
+                                    echo "<option value=".$rol.">".$rol."</option>"
+                                ?>  
+                            <?php }?>
+                        </select>
                     </div>
                 </div>
 
