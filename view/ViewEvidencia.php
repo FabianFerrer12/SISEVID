@@ -12,6 +12,7 @@ $validate = false;
 $verificate = false;
 $administrativo = false;
 
+<<<<<<< HEAD
 if (isset($_SESSION['ROLES'])){
     // foreach ($_SESSION['ROLES'] as $rol){
     //     if($rol == 'Administrador'){
@@ -31,6 +32,20 @@ if (isset($_SESSION['ROLES'])){
     $administrativo = true;
     
     echo '<script language="javascript">alert("No posee roles asignados, por ende se brindan todos los permisos");</script>';
+=======
+if (isset($_SESSION['roles'])){
+    foreach ($_SESSION['roles'] as $rol){
+        if($rol == 'Administrador'){
+            $administrador = true;
+        }else if($rol =='Verificador'){
+            $verificate = true;
+        }else if ($rol=='Validador'){
+            $validate = true;
+        }else if($rol=='Administrativo'){
+            $administrativo = true;
+        }
+    }
+>>>>>>> 3ac58a5a075f256a25b8c91b19f652c4564b2a54
 }
 
 //$algo = $_SESSION['rol'] ;
@@ -303,7 +318,58 @@ switch ($btn) {
 
                 </tr>
             </thead>
+<<<<<<< HEAD
             <tbody></tbody>
+=======
+            <?php 
+                $mysqli = new mysqli("localhost","root","","SISEVID");
+                if ($mysqli -> connect_errno) {
+                    echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+                    exit();
+                }
+            $sql = "SELECT  e.*,ed.ESTADO FROM evidencia e INNER JOIN evidencia_detalle ed ON ed.ID_EVIDENCIA=e.ID_EVIDENCIA WHERE ed.ACTIVO='S'";
+                $resultado=$mysqli->query($sql);
+                while($row = $resultado->fetch_array()){
+                    $datos=$row[0]."||".
+                    $row[1]."||".
+                    $row[2]."||".
+                    $row[3]."||".
+                    $row[4]."||".
+                    $row[5]."||".
+                    $row[6]."||".
+                    $row[7]."||".
+                    $row[8]."||".
+                    $row[9]."||".
+                    $row[10];
+                ?>
+            <tbody>
+                <tr>
+                    <th scope="row"><?php echo $row[0]; ?></th>
+                    <td><?php echo $row[1];  ?></td>
+                    <td><?php echo $row[2]; ?></td>
+                    <td><?php echo $row[3];?></td>
+                    <td><?php echo $row[4];?></td>
+                    <td><?php echo $row[7]; ?></td>
+                    <td> <?php if ($row[11]==1){
+                        echo 'No verificada';
+                        }else if( $row[11]==2) {
+                        echo 'Verificada';
+                        }else if( $row[11]==3){
+                        echo 'Verificada y validada';} ?> </td>
+                    <td>
+                        <div style="display: flex,justify-content: space-between;">
+                            <button class="btn btn-outline-primary" style="border-style: hidden" type="button"
+                                data-bs-toggle="modal" onclick="llenarModal_actualizar('<?php echo $datos?>');"
+                                data-bs-target="#editar"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="btn btn-outline-danger" style="border-style: hidden"
+                                value="<?php echo $row[0]; ?>" name="btnBorrar" type="submit"><i
+                                    class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <?php  } ?>
+            </tbody>
+>>>>>>> 3ac58a5a075f256a25b8c91b19f652c4564b2a54
         </table>
         <script>
                 const readEvidences = () => {

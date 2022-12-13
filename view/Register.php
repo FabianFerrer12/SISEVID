@@ -25,6 +25,7 @@ $validate = false;
 $verificate = false;
 $administrativo = false;
 
+<<<<<<< HEAD
 if (isset($_SESSION['ROLES'])){
     // foreach ($_SESSION['ROLES'] as $rol){
     //     if($rol == 'Administrador'){
@@ -44,6 +45,20 @@ if (isset($_SESSION['ROLES'])){
     $administrativo = true;
     
     echo '<script language="javascript">alert("No posee roles asignados, por ende se brindan todos los permisos");</script>';
+=======
+if (isset($_SESSION['roles'])){
+    foreach ($_SESSION['roles'] as $rol){
+        if($rol == 'Administrador'){
+            $administrador = true;
+        }else if($rol =='Verificador'){
+            $verificate = true;
+        }else if ($rol=='Validador'){
+            $validate = true;
+        }else if($rol=='Administrativo'){
+            $administrativo = true;
+        }
+    }  
+>>>>>>> 3ac58a5a075f256a25b8c91b19f652c4564b2a54
 }
 
 

@@ -16,7 +16,43 @@ $success = true;
 
 switch ($bot) {
     case 'Login':
+<<<<<<< HEAD
          break;
+=======
+        $UsuarioController = new UsuarioController();
+        $success = $UsuarioController->consultarUsuario($_SESSION['USER'],$_SESSION['PASSWORD']);;
+        if ($success) {
+            $_SESSION['activeSesion'] = true;
+            $_SESSION['roles'] = $UsuarioController->consultarDescipcionRol($_SESSION['USER'],$_SESSION['PASSWORD']);
+            foreach ($_SESSION['roles'] as $rol){
+                if($rol == null){
+                    $_SESSION['rol'] = null;
+                    break;
+                }else if($rol == 'Administrador'){
+                    $_SESSION['rol'] = $rol;
+                    break;
+                }else if($rol =='Verificador'){
+                    $_SESSION['rol'] = $rol;
+                }else if ($rol=='Validador'){
+                    $_SESSION['rol'] = $rol;
+                }else if($rol=='Administrativo'){
+                    $_SESSION['rol'] = $rol;
+                }
+            }
+
+            if($_SESSION['rol']=='Administrador'){
+                header("Location: ./view/ViewEvidencia.php");
+            }else if($_SESSION['rol']=='Verificador'){
+                header("Location: ./view/ViewEvidenciaVerificacion.php");
+            }else if($_SESSION['rol']=='Validador'){
+                header("Location: ./view/ViewEvidenciaValidacion.php");
+            }else if($_SESSION['rol']=='Administrativo'){
+                echo '<script language="javascript">alert("No existe pagina para este usuario con el rol asignado");</script>';
+            }
+
+        } else echo '<script language="javascript">alert("Usuario o contraseña incorrecta");</script>';
+        break;
+>>>>>>> 3ac58a5a075f256a25b8c91b19f652c4564b2a54
     case 'Soporte':
         echo '<script language="javascript">alert("Mensaje de contacto a soporte");</script>';
         header("Location: URL");
