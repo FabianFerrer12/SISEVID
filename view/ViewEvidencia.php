@@ -12,21 +12,28 @@ $validate = false;
 $verificate = false;
 $administrativo = false;
 
-if (isset($_SESSION['roles'])){
-    foreach ($_SESSION['roles'] as $rol){
-        if($rol == 'Administrador'){
-            $administrador = true;
-        }else if($rol =='Verificador'){
-            $validate = true;
-        }else if ($rol=='Validador'){
-            $verificate = true;
-        }else if($rol=='Administrativo'){
-            $administrativo = true;
-        }
-    }  
+if (isset($_SESSION['ROLES'])){
+    // foreach ($_SESSION['ROLES'] as $rol){
+    //     if($rol == 'Administrador'){
+    //         $administrador = true;
+    //     }else if($rol =='Verificador'){
+    //         $verificate = true;
+    //     }else if ($rol=='Validador'){
+    //         $validate = true;
+    //     }else if($rol=='Administrativo'){
+    //         $administrativo = true;
+    //     }
+    // }
+}else{
+    $administrador = true;
+    $verificate = true;
+    $validate = true;
+    $administrativo = true;
+    
+    echo '<script language="javascript">alert("No posee roles asignados, por ende se brindan todos los permisos");</script>';
 }
 
-$algo = $_SESSION['rol'] ;
+//$algo = $_SESSION['rol'] ;
 
 $idEvi = "";
 $titu = "";
@@ -75,7 +82,6 @@ if (isset($_POST['FECHA_CREACION_EVIDENCIA'])) $FechaCreacionEvi = $_POST['FECHA
 if (isset($_POST['FECHA_REGISTRO_EVIDENCIA'])) $FechaRegistroEvi = $_POST['FECHA_REGISTRO_EVIDENCIA'];
 if (isset($_POST['AUTORES'])) $Autores = $_POST['AUTORES'];
 if (isset($_POST['OBSERVACION'])) $Observacion = $_POST['OBSERVACION'];
-// if (isset($_POST['ID_LUGAR_GEOGRAFICO'])) $IDLugarGeo = $_POST['ID_LUGAR_GEOGRAFICO'];
 if (isset($_POST['ESTADO'])) $Estado = $_POST['ESTADO'];
 if (isset($_POST['inputBuscar'])) $inputBuscar = $_POST['inputBuscar'];
 
@@ -175,22 +181,29 @@ switch ($btn) {
     <script src="https://kit.fontawesome.com/99291d97ef.js" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-    function llenarModal_actualizar(datos) {
-        console.log(datos);
-        d = datos.split('||');
-        $("#ID_EVIDENCIA2").val(d[0]);
-        $("#TITULO2").val(d[1]);
-        $("#DESCRIPCIÓN2").val(d[2]);
-        $("#TIPO2").val(d[3]);
-        $("#TIPO_ARCHIVO2").val(d[4]);
-        $("#FECHA_CREACION_EVIDENCIA2").val(d[5]);
-        $("#FECHA_REGISTRO_EVIDENCIA2").val(d[6]);
-        $("#AUTORES2").val(d[7]);
-        $("#OBSERVACION2").val(d[8]);
-        $("#ID_LUGAR_GEOGRAFICO2").val(d[9]);
-        $("#ESTADO2").val(d[10]);
-    }
+        function llenarModal_actualizar(evidenceTrame) {
+            console.log(evidenceTrame);
+            
+            d = new String(evidenceTrame).split('||');
+            console.log(d);
+            $("#ID_EVIDENCIA2").val(d[0]);
+            $("#TITULO2").val(d[1]);
+            $("#DESCRIPCIÓN2").val(d[2]);
+            $("#TIPO2").val(d[3]);
+            $("#TIPO_ARCHIVO2").val(d[4]);
+            $("#FECHA_CREACION_EVIDENCIA2").val(d[5]);
+            $("#FECHA_REGISTRO_EVIDENCIA2").val(d[6]);
+            $("#AUTORES2").val(d[7]);
+            $("#OBSERVACION2").val(d[8]);
+            $("#ID_LUGAR_GEOGRAFICO2").val( 'No hay lugar geografico'
+                //d[9]
+                );
+            $("#ESTADO2").val('no hay estado'
+                //d[10]
+                );
+        }
     </script>
 </head>
 
@@ -276,8 +289,7 @@ switch ($btn) {
                 </div>
             </div>
         </div>
-
-        <table class="table table-striped" style="vertical-align: initial;">
+        <table class="table table-striped" style="vertical-align: initial;" id="table-evidences">
             <thead style="background: #055160;color: white;">
                 <tr>
                     <th scope="col">ID</th>
@@ -291,50 +303,98 @@ switch ($btn) {
 
                 </tr>
             </thead>
-            <?php 
-                $mysqli = new mysqli("localhost","root","","SISEVID");
-                if ($mysqli -> connect_errno) {
-                    echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-                    exit();
-                }
-            $sql = "SELECT  e.*,ed.ESTADO FROM evidencia e INNER JOIN evidencia_detalle ed ON ed.ID_EVIDENCIA=e.ID_EVIDENCIA WHERE ed.ACTIVO='S'";
-                $resultado=$mysqli->query($sql);
-                while($row = $resultado->fetch_array()){
-                    $datos=$row[0]."||".
-                    $row[1]."||".
-                    $row[2]."||".
-                    $row[3]."||".
-                    $row[4]."||".
-                    $row[5]."||".
-                    $row[6]."||".
-                    $row[7]."||".
-                    $row[8]."||".
-                    $row[9]."||".
-                    $row[10];
-                ?>
-            <tbody>
-                <tr>
-                    <th scope="row"><?php echo $row[0]; ?></th>
-                    <td><?php echo $row[1];  ?></td>
-                    <td><?php echo $row[2]; ?></td>
-                    <td><?php echo $row[3];?></td>
-                    <td><?php echo $row[4];?></td>
-                    <td><?php echo $row[7]; ?></td>
-                    <td><?php echo $row[13]; ?></td>
-                    <td>
-                        <div style="display: flex,justify-content: space-between;">
-                            <button class="btn btn-outline-primary" style="border-style: hidden" type="button"
-                                data-bs-toggle="modal" onclick="llenarModal_actualizar('<?php echo $datos?>');"
-                                data-bs-target="#editar"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button class="btn btn-outline-danger" style="border-style: hidden"
-                                value="<?php echo $row[0]; ?>" name="btnBorrar" type="submit"><i
-                                    class="fa-solid fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <?php  } ?>
-            </tbody>
+            <tbody></tbody>
         </table>
+        <script>
+                const readEvidences = () => {
+                    axios.get('http://localhost:8887/evidences/consultEvidences').then(res => {
+                        const table = document.getElementById('table-evidences').querySelector('tbody');
+
+                        res.data.forEach((evidence, key) => {
+                            console.log(evidence);  
+                            const tr = document.createElement('TR');
+                            tr.setAttribute('ID',evidence.id);
+
+                            const tdID = document.createElement('TD');
+                            tdID.textContent = evidence.id;
+
+                            const tdTitle = document.createElement('TD');
+                            tdTitle.textContent = evidence.title;
+
+                            const tdDescription = document.createElement('TD');
+                            tdDescription.textContent = evidence.description;
+
+                            const tdType = document.createElement('TD');
+                            tdType.textContent = evidence.type;
+
+                            const tdTypeFile = document.createElement('TD');
+                            tdTypeFile.textContent = evidence.typeFile;
+
+                            const tdAuthors = document.createElement('TD');
+                            tdAuthors.textContent = evidence.authors;
+
+                            const tdEstado = document.createElement('TD');
+                            tdEstado.textContent = 'evidence.authors';
+
+                            const tdAcciones = document.createElement('TD');
+
+                            const divAcciones = document.createElement('DIV');
+                            divAcciones.setAttribute('style','display: flex,justify-content: space-between;');
+                            
+                            const evidenceTrame = evidence.id + "||" + evidence.title + "||" + evidence.description + "||" + evidence.type + "||" + evidence.typeFile
+                            + "||" + evidence.evidenceCreationDate + "||" + evidence.evidenceRegisterDate + "||" + evidence.authors + "||" + evidence.observation;
+                            
+                            const btnAccionesActualizar = document.createElement('BUTTON');
+                            btnAccionesActualizar.setAttribute('VALUE',evidence.id);
+                            btnAccionesActualizar.setAttribute('style','border-style: hidden');
+                            btnAccionesActualizar.setAttribute('type','submit');
+                            btnAccionesActualizar.setAttribute('name','btnActualizar');
+                            btnAccionesActualizar.setAttribute('data-bs-toggle','modal');
+                            btnAccionesActualizar.setAttribute('data-bs-target','#editar');
+                            btnAccionesActualizar.setAttribute('onclick','llenarModal_actualizar("'+ evidenceTrame +'");');
+                            
+                            const btnAccionesBorrar = document.createElement('BUTTON');
+                            btnAccionesBorrar.setAttribute('CLASS','btn btn-outline-primary');
+                            btnAccionesBorrar.setAttribute('VALUE',evidence.id);
+                            btnAccionesBorrar.setAttribute('style','border-style: hidden');
+                            btnAccionesBorrar.setAttribute('type','button');
+                            btnAccionesBorrar.setAttribute('name','btnABorrar');
+                            btnAccionesBorrar.setAttribute('onclick','eliminarEvidencia('+evidence.id+');');
+
+                            const iIconEdit = document.createElement('i');
+                            iIconEdit.setAttribute('CLASS','fa-solid fa-pen-to-square');
+
+                            const iIconTrash = document.createElement('i');
+                            iIconTrash.setAttribute('CLASS','fa-solid fa-trash');
+
+                            btnAccionesActualizar.appendChild(iIconEdit);
+                            btnAccionesBorrar.appendChild(iIconTrash);
+                            divAcciones.appendChild(btnAccionesActualizar);
+                            divAcciones.appendChild(btnAccionesBorrar);
+                            tdAcciones.appendChild(divAcciones);
+
+                            tr.appendChild(tdID);
+                            tr.appendChild(tdTitle);
+                            tr.appendChild(tdDescription);
+                            tr.appendChild(tdType);
+                            tr.appendChild(tdTypeFile);
+                            tr.appendChild(tdAuthors);
+                            tr.appendChild(tdEstado);
+                            tr.appendChild(tdAcciones);
+                        
+                            table.appendChild(tr);
+                        });
+                    });
+                };
+                readEvidences();
+            </script>
+            <script>
+                function eliminarEvidencia(idEvidencia) {
+                    axios.delete('http://localhost:8887/joins/deleteEvidenceWithDetails/'+idEvidencia).then(res => {
+                        window.location.reload()}
+                    );
+                }
+            </script>
     </div>
 
     <!-- Modal nueva evidencia -->
@@ -405,14 +465,6 @@ switch ($btn) {
                                 </div>
                             </div>
 
-                            <div class="row g-3">
-                                <div class="col-md-4">
-                                    <label>Lugar geografico</label>
-                                    <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO"
-                                        value="<?php echo $IDLugarGeo ?>" required>
-                                </div>
-
-                            </div>
 
                         </div>
                 </div>
@@ -493,14 +545,6 @@ switch ($btn) {
                                 </div>
                             </div>
 
-                            <div class="row g-3">
-                                <div class="col-md-4">
-                                    <label>Lugar geografico</label>
-                                    <input class="form-control" type="text" name="ID_LUGAR_GEOGRAFICO2"
-                                        id="ID_LUGAR_GEOGRAFICO2" value="" required>
-                                </div>
-
-                            </div>
 
                         </div>
                 </div>
