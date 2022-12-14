@@ -149,10 +149,7 @@ switch ($btn) {
         $Estado="";
     break;
     case'Guardar':
-        $objEvidencia = new Evidencia($idEvi, $titu, $descrip, $tipo, $TipoArchivo, $FechaCreacionEvi, $FechaRegistroEvi, $Autores, $Observacion, $IDLugarGeo, $Estado);
-        $objEvidenciaController = new EvidenciaController($objEvidencia);        
-        $objEvidenciaController->guardarEvidencia();
-        $mat = $objEvidenciaController->listar();
+        
     break;
     case 'Editar':
         $objEvidencia = new Evidencia($idEvi2, $titu2, $descrip2, $tipo2, $TipoArchivo2, $FechaCreacionEvi2, $FechaRegistroEvi2, $Autores2, $Observacion2, $IDLugarGeo2, $Estado2);
@@ -223,7 +220,7 @@ switch ($btn) {
                                 registradas </a>
                         </li>
                     <?php }?>
-                    <?php if ($administrador || $verificate){ ?>
+                    <!-- <?php if ($administrador || $verificate){ ?>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="./ViewEvidenciaVerificacion.php">Evidencias
                                 verificadas</a>
@@ -244,13 +241,13 @@ switch ($btn) {
                         <li class="nav-item">
                             <a class="nav-link" href="./Register.php">Usuarios</a>
                         </li>
-                    <?php }?>
+                    <?php }?> -->
 
                     <li class="nav-item dropdown" style="position: absolute;right: 80px;">
                         <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i>
-                            <?php echo $_SESSION['USER']; ?>
+                            <!-- <?php echo $_SESSION['USER']; ?> -->
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="./CerrarSession.php">Cerrar session</a></li>
@@ -307,11 +304,10 @@ switch ($btn) {
         </table>
         <script>
                 const readEvidences = () => {
-                    axios.get('http://localhost:8887/evidences/consultEvidences').then(res => {
+                    axios.get('http://localhost:8887/joins/consultEvidenceWithDetails').then(res => {
                         const table = document.getElementById('table-evidences').querySelector('tbody');
 
                         res.data.forEach((evidence, key) => {
-                            console.log(evidence);  
                             const tr = document.createElement('TR');
                             tr.setAttribute('ID',evidence.id);
 
@@ -334,7 +330,7 @@ switch ($btn) {
                             tdAuthors.textContent = evidence.authors;
 
                             const tdEstado = document.createElement('TD');
-                            tdEstado.textContent = 'evidence.authors';
+                            tdEstado.textContent = evidence.status;
 
                             const tdAcciones = document.createElement('TD');
 
@@ -414,17 +410,17 @@ switch ($btn) {
                             <div class="row g-3">
                                 <div class="col">
                                     <label>ID Evidencia</label>
-                                    <input class="form-control" type="text" name="ID_EVIDENCIA"
+                                    <input class="form-control" type="text" name="ID_EVIDENCIA" id="ID_EVIDENCIA"
                                         value="<?php echo $idEvi ?>" required>
                                 </div>
                                 <div class="col">
                                     <label>Titulo</label>
-                                    <input class="form-control" type="text" name="TITULO" value="<?php echo $titu ?>"
+                                    <input class="form-control" type="text" name="TITULO" id="TITULO" value="<?php echo $titu ?>"
                                         required>
                                 </div>
                                 <div class="col">
                                     <label>Descripcion</label>
-                                    <input class="form-control" type="text" name="DESCRIPCIÓN"
+                                    <input class="form-control" type="text" name="DESCRIPCIÓN" id="DESCRIPCIÓN"
                                         value="<?php echo $descrip ?>" required>
                                 </div>
                             </div>
@@ -470,11 +466,41 @@ switch ($btn) {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-primary" value="Guardar" name="btn" type="submit"><i
+                    <button class="btn btn-primary" value="Guardar" name="btn" id='Guardar' type="submit"><i
                             class="fa-regular fa-floppy-disk"></i> Guardar</button>
                 </div>
             </div>
             </form>
+            <script>
+                document.getElementById('Guardar').addEventListener('submit', (event) => {
+                    var evidencia = {};
+                    evidencia.id = document.getElementById('ID_EVIDENCIA');
+                    evidencia.title = document.getElementById('TITULO');
+                    evidencia.description = document.getElementById('');
+                    evidencia.type = document.getElementById('');
+                    evidencia.typeFile = document.getElementById('');
+                    evidencia.evidenceCreationDate = document.getElementById('');
+                    evidencia.evidenceRegisterDate = document.getElementById('');
+                    evidencia.authors = document.getElementById('');
+                    evidencia.observation = document.getElementById('');
+                    evidencia.userCreate = document.getElementById('');
+                    evidencia.creationDate = document.getElementById('');
+                    evidencia.status = document.getElementById('');
+                    evidencia.evidenceDetail.id = document.getElementById('');
+                    evidencia.evidenceDetail.evidenceId = document.getElementById('');
+                    evidencia.evidenceDetail.userUpdate = document.getElementById('');
+                    evidencia.evidenceDetail.dateUpdate = document.getElementById('');
+                    evidencia.evidenceDetail.status = document.getElementById('');
+                    evidencia.evidenceDetail.active = document.getElementById('');
+                    const json = JSON.stringify(evidencia);
+
+                    alert(json)
+
+                    event.preventDefault();
+                    
+                });
+                    
+            </script>
         </div>
     </div>
 
